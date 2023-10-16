@@ -26,7 +26,10 @@ public class UserService {
         user.setUserName(userDto.getUserName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
-        Role role = roleRepository.findByName("ROLE_USER");
+        Role role = roleRepository.findByName("ROLE_ADMIN");
+        if(role == null){
+            role = createAdmin();
+        }
         user.setRoles(Set.of(role));
 
         userRepository.save(user);
@@ -36,6 +39,12 @@ public class UserService {
     }
     public User findUserByUserName(String userName){
         return userRepository.findByUserName(userName);
+    }
+
+    public Role createAdmin(){
+        Role role = new Role();
+        role.setName("ROLE_ADMIN");
+        return roleRepository.save(role);
     }
 
 
