@@ -1,6 +1,6 @@
 package com.wjadczak.groomerWebApp.service;
 
-import com.wjadczak.groomerWebApp.dto.UserDto;
+import com.wjadczak.groomerWebApp.controller.dto.SignUpDto;
 import com.wjadczak.groomerWebApp.entity.Role;
 import com.wjadczak.groomerWebApp.entity.User;
 import com.wjadczak.groomerWebApp.repository.RoleRepository;
@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -20,12 +21,12 @@ public class UserService {
     @Autowired
     private final RoleRepository roleRepository;
 
-    public void saveUser(UserDto userDto){
+    public void saveUser(SignUpDto signUpDto){
         User user = new User();
-        user.setName(userDto.getName());
-        user.setUserName(userDto.getUserName());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
+        user.setName(signUpDto.getName());
+        user.setUserName(signUpDto.getUserName());
+        user.setEmail(signUpDto.getEmail());
+        user.setPassword(signUpDto.getPassword());
         Role role = roleRepository.findByName("ROLE_ADMIN");
         if(role == null){
             role = createAdmin();
@@ -34,12 +35,18 @@ public class UserService {
 
         userRepository.save(user);
     }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
+
     public User findUserByEmail(String email){
         return userRepository.findByEmail(email);
     }
     public User findUserByUserName(String userName){
         return userRepository.findByUserName(userName);
     }
+
 
     public Role createAdmin(){
         Role role = new Role();
