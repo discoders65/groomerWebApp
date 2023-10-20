@@ -18,9 +18,24 @@ public class UserController {
     @Autowired
     UserService userService;
     @PostMapping("/signup")
-    public ResponseEntity<SignUpDto> signup(@RequestBody SignUpDto signUpDto){
-        userService.saveUser(signUpDto);
-        return ResponseEntity.ok(signUpDto);
+    public ResponseEntity<SignUpDto> signup(@RequestBody SignUpDto signUpDto){ // TODO SignUpReqDto
+        userService.saveUser(signUpDto); // TODO saveUser => createNewUser(), userService.saveUser(UserDto)
+        // TODO signUpDto - wejsciowe
+        // signUpDto map to UserDto (MapStruct tool)
+        // UserDto for modification
+        //
+        return ResponseEntity.ok(signUpDto); //TODO
+
+
+        //TODO
+/*
+        in: SignUpDto
+        UserDto
+        User
+        out:UserDto or
+        out: UserDto -> UserCreatedDtoRes
+
+ */
     }
     @GetMapping("/users")
     public List<UserDto> getAllUsers(){

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@AllArgsConstructor
+@AllArgsConstructor //TODO ReqARgs
 public class UserService {
 
     @Autowired
@@ -21,19 +21,22 @@ public class UserService {
     @Autowired
     private final RoleRepository roleRepository;
 
-    public void saveUser(SignUpDto signUpDto){
+    public void saveUser(SignUpDto signUpDto){ // TODO saveUser(SignUpDto signUpDto) ==> saveUser(UserDto user)
+
+        // TODO UserDto map to User
         User user = new User();
-        user.setName(signUpDto.getName());
+        user.setName(signUpDto.getName()); //TODO MapStruct
         user.setUserName(signUpDto.getUserName());
         user.setEmail(signUpDto.getEmail());
         user.setPassword(signUpDto.getPassword());
-        Role role = roleRepository.findByName("ROLE_ADMIN");
+        Role role = roleRepository.findByName("ROLE_ADMIN"); //TODO to delete
         if(role == null){
             role = createAdmin();
         }
         user.setRoles(Set.of(role));
 
-        userRepository.save(user);
+        User saved = userRepository.save(user); // TODO return created user
+        // TODO saved map to UserDto
     }
 
     public List<User> getAllUsers(){
