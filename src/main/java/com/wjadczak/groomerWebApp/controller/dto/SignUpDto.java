@@ -1,14 +1,15 @@
 package com.wjadczak.groomerWebApp.controller.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter // TODO delete setter
-@NoArgsConstructor //TODO ALLargs
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SignUpDto {
-    private Long id; // TODO all fields are final
     private String name;
     private String userName;
     private String email;

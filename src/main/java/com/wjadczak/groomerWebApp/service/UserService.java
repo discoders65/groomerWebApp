@@ -1,6 +1,10 @@
 package com.wjadczak.groomerWebApp.service;
 
+
 import com.wjadczak.groomerWebApp.controller.dto.SignUpDto;
+import com.wjadczak.groomerWebApp.controller.dto.UserDto;
+import com.wjadczak.groomerWebApp.controller.mapper.SignUpDtoToUserMapper;
+import com.wjadczak.groomerWebApp.controller.mapper.UserToUserDtoMapper;
 import com.wjadczak.groomerWebApp.entity.Role;
 import com.wjadczak.groomerWebApp.entity.User;
 import com.wjadczak.groomerWebApp.repository.RoleRepository;
@@ -10,33 +14,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
-@AllArgsConstructor //TODO ReqARgs
+@AllArgsConstructor
 public class UserService {
 
     @Autowired
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    private final RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
-    public void saveUser(SignUpDto signUpDto){ // TODO saveUser(SignUpDto signUpDto) ==> saveUser(UserDto user)
+    public UserDto createNewUser(SignUpDto signUpDto){
 
-        // TODO UserDto map to User
         User user = new User();
-        user.setName(signUpDto.getName()); //TODO MapStruct
-        user.setUserName(signUpDto.getUserName());
-        user.setEmail(signUpDto.getEmail());
-        user.setPassword(signUpDto.getPassword());
-        Role role = roleRepository.findByName("ROLE_ADMIN"); //TODO to delete
+        Role role = roleRepository.findByName("USER");
         if(role == null){
-            role = createAdmin();
+//            role = new Role();
+//            role.setName("USER");
         }
-        user.setRoles(Set.of(role));
 
-        User saved = userRepository.save(user); // TODO return created user
-        // TODO saved map to UserDto
+//        user.setRole(role);
+        user = SignUpDtoToUserMapper.signUpDtoToUserMapper.signUpDtoToUser(signUpDto);
+
+        User saved = userRepository.save(user);
+        UserDto savedUserDto = UserToUserDtoMapper.userToUserDtoMapper.userToUserDto(saved);
+        return savedUserDto;
     }
 
     public List<User> getAllUsers(){
@@ -51,11 +53,7 @@ public class UserService {
     }
 
 
-    public Role createAdmin(){
-        Role role = new Role();
-        role.setName("ROLE_ADMIN");
-        return roleRepository.save(role);
-    }
+
 
 
 }
