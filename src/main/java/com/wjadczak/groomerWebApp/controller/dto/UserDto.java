@@ -1,6 +1,5 @@
 package com.wjadczak.groomerWebApp.controller.dto;
 
-import com.wjadczak.groomerWebApp.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +12,6 @@ public class UserDto {
     private String name;
     private String userName;
     private String email;
-    private Role role;
+
 
 }
