@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthorizationController {
     @GetMapping
     public ResponseEntity<String> sayHello() {
-        return ResponseEntity.ok("Here is your resource");
+        return ResponseEntity.ok("your resource");
     }
 }
