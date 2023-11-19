@@ -76,6 +76,12 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>9.16.3</version>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>
@@ -135,6 +141,7 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 
@@ -158,6 +165,7 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+
 
 
 </project>
