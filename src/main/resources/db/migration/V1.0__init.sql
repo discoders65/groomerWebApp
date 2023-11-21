@@ -4,7 +4,8 @@ BEGIN;
 CREATE TABLE IF NOT EXISTS groomer."User"
 (
     id uuid NOT NULL,
-    login character varying(32) NOT NULL,
+    name character varying(32) NOT NULL,
+    user_name character varying(32) NOT NULL,
     password character varying(255) NOT NULL,
     role character varying(255) NOT NULL,
     email character varying(255) NOT NULL,
@@ -23,7 +24,7 @@ CREATE TABLE IF NOT EXISTS groomer."Appointment"
     pricing numeric(4)
 );
 
-CREATE TABLE IF NOT EXISTS groomer."Messages"
+CREATE TABLE IF NOT EXISTS groomer."Message"
 (
     id uuid NOT NULL,
     id_sender uuid NOT NULL,
