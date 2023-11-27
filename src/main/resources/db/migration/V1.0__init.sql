@@ -1,7 +1,18 @@
 BEGIN;
 
+CREATE SCHEMA IF NOT EXISTS groomer
 
-CREATE TABLE IF NOT EXISTS groomer."User"
+    AUTHORIZATION postgres;
+
+COMMENT ON SCHEMA groomer
+    IS 'standard public schema';
+
+GRANT ALL ON SCHEMA groomer TO PUBLIC;
+
+GRANT ALL ON SCHEMA groomer TO postgres;
+
+
+CREATE TABLE IF NOT EXISTS groomer."user"
 (
     id uuid NOT NULL,
     name character varying(32) NOT NULL,
@@ -14,17 +25,17 @@ CREATE TABLE IF NOT EXISTS groomer."User"
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS groomer."Appointment"
+CREATE TABLE IF NOT EXISTS groomer."appointment"
 (
     id uuid NOT NULL,
-    date_start date NOT NULL,
-    date_end date NOT NULL,
+    date_start timestamp NOT NULL,
+    date_end timestamp NOT NULL,
     comment character varying,
     user_id uuid NOT NULL,
     pricing numeric(4)
 );
 
-CREATE TABLE IF NOT EXISTS groomer."Message"
+CREATE TABLE IF NOT EXISTS groomer."message"
 (
     id uuid NOT NULL,
     id_sender uuid NOT NULL,
@@ -36,25 +47,25 @@ CREATE TABLE IF NOT EXISTS groomer."Message"
 );
 
 
-ALTER TABLE IF EXISTS groomer."Appointment"
+ALTER TABLE IF EXISTS groomer."appointment"
     ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id)
-    REFERENCES groomer."User" (id) MATCH SIMPLE
+    REFERENCES groomer."user" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
 
 
-ALTER TABLE IF EXISTS groomer."Messages"
+ALTER TABLE IF EXISTS groomer."message"
     ADD CONSTRAINT fk_id_sender FOREIGN KEY (id_sender)
-    REFERENCES groomer."User" (id) MATCH SIMPLE
+    REFERENCES groomer."user" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
 
 
-ALTER TABLE IF EXISTS groomer."Messages"
+ALTER TABLE IF EXISTS groomer."message"
     ADD CONSTRAINT fk_id_recipent FOREIGN KEY (id_recipent)
-    REFERENCES groomer."User" (id) MATCH SIMPLE
+    REFERENCES groomer."user" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
