@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 @Entity
@@ -15,7 +16,7 @@ public class AppointmentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
     @Column(name ="date_start")
     private LocalDateTime dateStart;
@@ -28,4 +29,6 @@ public class AppointmentEntity {
     private UserEntity userEntity;
     @Column
     private Double pricing;
+    @Column
+    private boolean accepted;
 }

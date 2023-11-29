@@ -1,13 +1,17 @@
 package com.wjadczak.groomerWebApp.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 
 @NoArgsConstructor
@@ -15,14 +19,14 @@ import java.util.List;
 @Entity
 @Builder
 @Data
-@Table(name="user")
+@Table(name="groomer_user")
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column
+    private UUID id;
+    @Column(nullable = false)
     private String name;
-    @Column(name = "user_name", nullable = false, unique = true)
+    @Column(name = "user_name")
     private String userName;
     @Column(nullable = false, unique = true)
     private String email;
@@ -30,6 +34,8 @@ public class UserEntity implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Column
+    private int mobile;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -10,11 +10,12 @@ COMMENT ON SCHEMA groomer
 GRANT ALL ON SCHEMA groomer TO PUBLIC;
 
 GRANT ALL ON SCHEMA groomer TO postgres;
+DROP EXTENSION IF EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-
-CREATE TABLE IF NOT EXISTS groomer."user"
+CREATE TABLE IF NOT EXISTS groomer."groomer_user"
 (
-    id uuid NOT NULL,
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
     name character varying(32) NOT NULL,
     user_name character varying(32) NOT NULL,
     password character varying(255) NOT NULL,
@@ -27,7 +28,7 @@ CREATE TABLE IF NOT EXISTS groomer."user"
 
 CREATE TABLE IF NOT EXISTS groomer."appointment"
 (
-    id uuid NOT NULL,
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
     date_start timestamp NOT NULL,
     date_end timestamp NOT NULL,
     comment character varying,
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS groomer."appointment"
 
 CREATE TABLE IF NOT EXISTS groomer."message"
 (
-    id uuid NOT NULL,
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
     id_sender uuid NOT NULL,
     id_recipent uuid NOT NULL,
     send_date timestamp without time zone NOT NULL,
@@ -49,7 +50,7 @@ CREATE TABLE IF NOT EXISTS groomer."message"
 
 ALTER TABLE IF EXISTS groomer."appointment"
     ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id)
-    REFERENCES groomer."user" (id) MATCH SIMPLE
+    REFERENCES groomer."groomer_user" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
@@ -57,7 +58,7 @@ ALTER TABLE IF EXISTS groomer."appointment"
 
 ALTER TABLE IF EXISTS groomer."message"
     ADD CONSTRAINT fk_id_sender FOREIGN KEY (id_sender)
-    REFERENCES groomer."user" (id) MATCH SIMPLE
+    REFERENCES groomer."groomer_user" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
@@ -65,7 +66,7 @@ ALTER TABLE IF EXISTS groomer."message"
 
 ALTER TABLE IF EXISTS groomer."message"
     ADD CONSTRAINT fk_id_recipent FOREIGN KEY (id_recipent)
-    REFERENCES groomer."user" (id) MATCH SIMPLE
+    REFERENCES groomer."groomer_user" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;

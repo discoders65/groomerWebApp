@@ -24,9 +24,9 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
 
     @Override
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
-        UserEntity user = UserEntity.builder().name(request.getName()).userName(request.getUserName())
+        UserEntity user = UserEntity.builder().name(request.getName()).userName(request.getUser_name())
                 .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER).build();
+                .role(Role.USER).mobile(request.getMobile()).build();
         userRepository.save(user);
         String jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
