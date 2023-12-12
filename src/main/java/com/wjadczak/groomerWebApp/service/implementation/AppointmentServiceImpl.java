@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 @Service
-public class AppointmentServiceImplementation implements AppointmentService {
+public class AppointmentServiceImpl implements AppointmentService {
 
-    @Autowired
+    @Autowired // -->
     AppointmentRepository appointmentRepository;
 
     @Override

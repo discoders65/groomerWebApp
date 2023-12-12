@@ -6,9 +6,5 @@ public interface UserService {
 
     UserDetailsService userDetailsService();
 
-//
-//    UserDto createNewUser(SignUpDto signUpDto);
-//    List<UserEntity> getAllUsers();
-//    UserEntity findUserByEmail(String email);
-//    UserEntity findUserByUserName(String userName);
+
 }
