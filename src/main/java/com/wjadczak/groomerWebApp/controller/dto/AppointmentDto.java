@@ -8,8 +8,8 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class AppointmentDto {
@@ -18,7 +18,8 @@ public class AppointmentDto {
     private LocalDateTime dateStart;
     private LocalDateTime dateEnd;
     private String comment;
-    private Long userId;
+    private UUID userId;
     private Double pricing;
     private boolean accepted;
+
 }
