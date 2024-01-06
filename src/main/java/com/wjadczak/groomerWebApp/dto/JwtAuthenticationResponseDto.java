@@ -1,4 +1,4 @@
-package com.wjadczak.groomerWebApp.dao.response;
+package com.wjadczak.groomerWebApp.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class JwtAuthenticationResponse {
+public class JwtAuthenticationResponseDto {
     private String token;
 }

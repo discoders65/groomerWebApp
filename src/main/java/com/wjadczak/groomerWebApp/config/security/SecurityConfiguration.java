@@ -1,4 +1,4 @@
-package com.wjadczak.groomerWebApp.security;
+package com.wjadczak.groomerWebApp.config.security;
 
 import com.wjadczak.groomerWebApp.service.UserService;
 import lombok.RequiredArgsConstructor;

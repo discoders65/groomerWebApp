@@ -1,9 +1,9 @@
 package com.wjadczak.groomerWebApp.controller;
 
 
-import com.wjadczak.groomerWebApp.controller.dto.AppointmentDto;
+import com.wjadczak.groomerWebApp.dto.AppointmentDto;
 import com.wjadczak.groomerWebApp.errors.InvalidSearchRequestException;
-import com.wjadczak.groomerWebApp.request.AppointmentSearchRequest;
+import com.wjadczak.groomerWebApp.dto.AppointmentSearchRequestDto;
 import com.wjadczak.groomerWebApp.service.AppointmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,10 +24,10 @@ public class CalendarController {
     private final AppointmentService appointmentService;
 
     @PostMapping("/search")
-    public ResponseEntity<List<AppointmentDto>> findAppointment(@RequestBody AppointmentSearchRequest appointmentSearchRequest) throws InvalidSearchRequestException {
+    public ResponseEntity<List<AppointmentDto>> findAppointment(@RequestBody AppointmentSearchRequestDto appointmentSearchRequestDto) throws InvalidSearchRequestException {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(appointmentService
-                        .findAppointment(appointmentSearchRequest));
+                        .findAppointment(appointmentSearchRequestDto));
     }
 
 

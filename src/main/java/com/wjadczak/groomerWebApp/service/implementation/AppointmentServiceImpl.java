@@ -1,10 +1,10 @@
 package com.wjadczak.groomerWebApp.service.implementation;
 
-import com.wjadczak.groomerWebApp.controller.dto.AppointmentDto;
-import com.wjadczak.groomerWebApp.controller.mapper.AppointmentToAppointmentDtoMapper;
+import com.wjadczak.groomerWebApp.dto.AppointmentDto;
+import com.wjadczak.groomerWebApp.mapper.AppointmentToAppointmentDtoMapper;
 import com.wjadczak.groomerWebApp.errors.InvalidSearchRequestException;
 import com.wjadczak.groomerWebApp.repository.AppointmentRepository;
-import com.wjadczak.groomerWebApp.request.AppointmentSearchRequest;
+import com.wjadczak.groomerWebApp.dto.AppointmentSearchRequestDto;
 import com.wjadczak.groomerWebApp.service.AppointmentService;
 import com.wjadczak.groomerWebApp.utils.TimeParserUtil;
 import lombok.RequiredArgsConstructor;
@@ -15,16 +15,17 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 @RequiredArgsConstructor
 @Service
+
 public class AppointmentServiceImpl implements AppointmentService {
 
 
     private final AppointmentRepository appointmentRepository;
 
     @Override
-    public List<AppointmentDto> findAppointment(AppointmentSearchRequest appointmentSearchRequest) {
-        validateDateTimeInput(appointmentSearchRequest);
-        LocalDateTime startDateTime = TimeParserUtil.parseDateTime(appointmentSearchRequest.getStartDateTime());
-        LocalDateTime endDateTime = TimeParserUtil.parseDateTime(appointmentSearchRequest.getEndDateTime());
+    public List<AppointmentDto> findAppointment(AppointmentSearchRequestDto appointmentSearchRequestDto) {
+        validateDateTimeInput(appointmentSearchRequestDto);
+        LocalDateTime startDateTime = TimeParserUtil.parseDateTime(appointmentSearchRequestDto.getStartDateTime());
+        LocalDateTime endDateTime = TimeParserUtil.parseDateTime(appointmentSearchRequestDto.getEndDateTime());
         return findAppointmentDateBetween(startDateTime, endDateTime);
     }
 
@@ -34,14 +35,14 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .mapAppointmentEntitiesToDtos(appointmentRepository.findByDateStartBetween(dateStart, dateEnd));
     }
 
-    private void validateDateTimeInput(AppointmentSearchRequest appointmentSearchRequest) {
-         if(nonNull(appointmentSearchRequest)) {
-            String startDateTime = appointmentSearchRequest.getStartDateTime();
-            String endDateTime = appointmentSearchRequest.getEndDateTime();
+    private void validateDateTimeInput(AppointmentSearchRequestDto appointmentSearchRequestDto) {
+         if(nonNull(appointmentSearchRequestDto)) {
+            String startDateTime = appointmentSearchRequestDto.getStartDateTime();
+            String endDateTime = appointmentSearchRequestDto.getEndDateTime();
             boolean startDateIsNullOrEndDateIsNull = isNull(startDateTime) || isNull(endDateTime);
             if(startDateIsNullOrEndDateIsNull) {
                 throw new InvalidSearchRequestException("Must provide a start and/or end date to retrieve calendar appointments.");
-            }
+            } //zastanowić się nad wyrzuceniem do oddzielnej metody
         } else {
             throw new InvalidSearchRequestException("Search parameters startDateTime and endDateTime must be provided.");
         }

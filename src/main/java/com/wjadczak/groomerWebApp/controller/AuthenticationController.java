@@ -1,9 +1,9 @@
 package com.wjadczak.groomerWebApp.controller;
 
-import com.wjadczak.groomerWebApp.dao.request.SignInRequest;
-import com.wjadczak.groomerWebApp.dao.request.SignUpRequest;
-import com.wjadczak.groomerWebApp.dao.response.JwtAuthenticationResponse;
-import com.wjadczak.groomerWebApp.security.AuthenticationService;
+import com.wjadczak.groomerWebApp.dto.SignUpDto;
+import com.wjadczak.groomerWebApp.dto.SignInDto;
+import com.wjadczak.groomerWebApp.dto.JwtAuthenticationResponseDto;
+import com.wjadczak.groomerWebApp.config.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
     @PostMapping("/signup")
-    public ResponseEntity<JwtAuthenticationResponse> signUp(@RequestBody SignUpRequest request) {
-        return ResponseEntity.ok(authenticationService.signUp(request));
+    public ResponseEntity<?> signUp(@RequestBody SignUpDto signUpDto) {
+        authenticationService.signUp(signUpDto);
+        return ResponseEntity.ok("User registered successfully!");
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody SignInRequest request) {
-        return ResponseEntity.ok(authenticationService.signIn(request));
+    public ResponseEntity<JwtAuthenticationResponseDto> signIn(@RequestBody SignInDto signInDto) {
+        return ResponseEntity.ok(authenticationService.signIn(signInDto));
     }
 }

@@ -1,6 +1,6 @@
-package com.wjadczak.groomerWebApp.controller.mapper;
+package com.wjadczak.groomerWebApp.mapper;
 
-import com.wjadczak.groomerWebApp.controller.dto.SignUpDto;
+import com.wjadczak.groomerWebApp.dto.SignUpDto;
 import com.wjadczak.groomerWebApp.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

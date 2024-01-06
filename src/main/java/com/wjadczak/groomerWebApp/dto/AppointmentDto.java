@@ -1,4 +1,4 @@
-package com.wjadczak.groomerWebApp.controller.dto;
+package com.wjadczak.groomerWebApp.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
