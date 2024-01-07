@@ -1,5 +1,6 @@
 package com.wjadczak.groomerWebApp.service.implementation;
 
+import com.wjadczak.groomerWebApp.errors.ErrorMessages;
 import com.wjadczak.groomerWebApp.dto.AppointmentDto;
 import com.wjadczak.groomerWebApp.mapper.AppointmentToAppointmentDtoMapper;
 import com.wjadczak.groomerWebApp.errors.InvalidSearchRequestException;
@@ -36,15 +37,19 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     private void validateDateTimeInput(AppointmentSearchRequestDto appointmentSearchRequestDto) {
-         if(nonNull(appointmentSearchRequestDto)) {
-            String startDateTime = appointmentSearchRequestDto.getStartDateTime();
-            String endDateTime = appointmentSearchRequestDto.getEndDateTime();
-            boolean startDateIsNullOrEndDateIsNull = isNull(startDateTime) || isNull(endDateTime);
-            if(startDateIsNullOrEndDateIsNull) {
-                throw new InvalidSearchRequestException("Must provide a start and/or end date to retrieve calendar appointments.");
-            } //zastanowić się nad wyrzuceniem do oddzielnej metody
+        if (nonNull(appointmentSearchRequestDto)) {
+            checkDateTimeInput(appointmentSearchRequestDto);
         } else {
-            throw new InvalidSearchRequestException("Search parameters startDateTime and endDateTime must be provided.");
+            throw new InvalidSearchRequestException(ErrorMessages.MISSING_SEARCH_INPUT);
+        }
+    }
+
+    private void checkDateTimeInput(AppointmentSearchRequestDto appointmentSearchRequestDto){
+        String startDateTime = appointmentSearchRequestDto.getStartDateTime();
+        String endDateTime = appointmentSearchRequestDto.getEndDateTime();
+        boolean startDateIsNullOrEndDateIsNull = isNull(startDateTime) || isNull(endDateTime);
+        if(startDateIsNullOrEndDateIsNull) {
+            throw new InvalidSearchRequestException(ErrorMessages.MISSING_SEARCH_INPUT);
         }
     }
 

@@ -20,5 +20,9 @@ public class ExceptionHandlers {
     public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException userAlreadyExistsException){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userAlreadyExistsException.getMessage());
     }
+    @ExceptionHandler(PasswordValidationException.class)
+    public ResponseEntity<String> handlePasswordValidationException(PasswordValidationException passwordValidationException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(passwordValidationException.getMessage());
+    }
 }
 
