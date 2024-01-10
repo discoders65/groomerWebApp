@@ -2,6 +2,7 @@ package com.wjadczak.groomerWebApp.errors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -23,6 +24,10 @@ public class ExceptionHandlers {
     @ExceptionHandler(PasswordValidationException.class)
     public ResponseEntity<String> handlePasswordValidationException(PasswordValidationException passwordValidationException){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(passwordValidationException.getMessage());
+    }
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<String> handleUsernameNotFoundException(UsernameNotFoundException usernameNotFoundException){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(usernameNotFoundException.getMessage());
     }
 }
 

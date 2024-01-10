@@ -1,5 +1,6 @@
 package com.wjadczak.groomerWebApp.service.implementation;
 
+import com.wjadczak.groomerWebApp.errors.ErrorMessages;
 import com.wjadczak.groomerWebApp.repository.UserRepository;
 import com.wjadczak.groomerWebApp.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException(ErrorMessages.USERNAME_NOT_FOUND));
     }
 
 }

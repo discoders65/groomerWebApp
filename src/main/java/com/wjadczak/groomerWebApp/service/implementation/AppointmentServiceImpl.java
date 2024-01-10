@@ -9,6 +9,7 @@ import com.wjadczak.groomerWebApp.dto.AppointmentSearchRequestDto;
 import com.wjadczak.groomerWebApp.service.AppointmentService;
 import com.wjadczak.groomerWebApp.utils.TimeParserUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,7 +17,7 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 @RequiredArgsConstructor
 @Service
-
+@Slf4j
 public class AppointmentServiceImpl implements AppointmentService {
 
 
@@ -24,6 +25,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<AppointmentDto> findAppointment(AppointmentSearchRequestDto appointmentSearchRequestDto) {
+        log.debug("Entering findAppointment method with search request: {}", appointmentSearchRequestDto);
         validateDateTimeInput(appointmentSearchRequestDto);
         LocalDateTime startDateTime = TimeParserUtil.parseDateTime(appointmentSearchRequestDto.getStartDateTime());
         LocalDateTime endDateTime = TimeParserUtil.parseDateTime(appointmentSearchRequestDto.getEndDateTime());
@@ -31,15 +33,20 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     private List<AppointmentDto> findAppointmentDateBetween(LocalDateTime dateStart, LocalDateTime dateEnd) {
-        return AppointmentToAppointmentDtoMapper
+        log.debug("Finding appointments between {} and {}", dateStart, dateEnd);
+        List<AppointmentDto> appointmentsFound = AppointmentToAppointmentDtoMapper
                 .appointmentToAppointmentDtoMapper
                 .mapAppointmentEntitiesToDtos(appointmentRepository.findByDateStartBetween(dateStart, dateEnd));
+        log.debug("Found {} appointments between {} and {}", appointmentsFound.size(), dateStart, dateEnd);
+        return appointmentsFound;
     }
 
     private void validateDateTimeInput(AppointmentSearchRequestDto appointmentSearchRequestDto) {
+        log.debug("Validating date-time input: {}", appointmentSearchRequestDto);
         if (nonNull(appointmentSearchRequestDto)) {
             checkDateTimeInput(appointmentSearchRequestDto);
         } else {
+            log.error("Invalid search request: null input");
             throw new InvalidSearchRequestException(ErrorMessages.MISSING_SEARCH_INPUT);
         }
     }
@@ -49,6 +56,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         String endDateTime = appointmentSearchRequestDto.getEndDateTime();
         boolean startDateIsNullOrEndDateIsNull = isNull(startDateTime) || isNull(endDateTime);
         if(startDateIsNullOrEndDateIsNull) {
+            log.error("Invalid search request: Missing startDateTime or endDateTime");
             throw new InvalidSearchRequestException(ErrorMessages.MISSING_SEARCH_INPUT);
         }
     }

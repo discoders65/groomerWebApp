@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -27,8 +29,8 @@ public class AppointmentEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
-    @Column
-    private Double pricing; //BigDecimal
+    @Column(columnDefinition = "NUMERIC(10,2)")
+    private BigDecimal pricing; //BigDecimal
     @Column
     private boolean accepted;
 }
