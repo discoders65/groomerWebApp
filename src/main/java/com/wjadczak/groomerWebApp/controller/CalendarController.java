@@ -2,9 +2,12 @@ package com.wjadczak.groomerWebApp.controller;
 
 
 import com.wjadczak.groomerWebApp.dto.AppointmentDto;
-import com.wjadczak.groomerWebApp.errors.InvalidSearchRequestException;
 import com.wjadczak.groomerWebApp.dto.AppointmentSearchRequestDto;
+import com.wjadczak.groomerWebApp.dto.AppointmentSaveRequestDto;
+import com.wjadczak.groomerWebApp.errors.InvalidSaveAppointmentDataInputException;
+import com.wjadczak.groomerWebApp.errors.InvalidSearchRequestException;
 import com.wjadczak.groomerWebApp.service.AppointmentService;
+import com.wjadczak.groomerWebApp.utils.InfoMessages;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +32,11 @@ public class CalendarController {
                 .body(appointmentService
                         .findAppointment(appointmentSearchRequestDto));
     }
-
+    @PostMapping("/save")
+    public ResponseEntity<String> saveAppointment(@RequestBody AppointmentSaveRequestDto appointmentSaveRequestDto) throws InvalidSaveAppointmentDataInputException {
+        appointmentService.saveAppointment(appointmentSaveRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(InfoMessages.APPOINTMENT_SAVED);
+    }
 
 }

@@ -13,8 +13,10 @@ public class ErrorMessages {
     public static final String USERNAME_NOT_FOUND = "User not found.";
     // Password validation errors:
     public static final String PASSWORD_TOO_SHORT = "Password is too short.";
-    public static final String NO_SPECIAL_CHARS_FOUND = "Password must contain at least one of the characters: .";
+    public static final String NO_SPECIAL_CHARS_FOUND = "Password must contain at least one of the characters: ";
     // Calendar-related errors:
     public static final String MISSING_SEARCH_INPUT = "Must provide a start and/or end date to retrieve calendar appointments.";
-
+    public static final String APPOINTMENT_NOT_FOUND = "Appointment sought within the specified date range was not found.";
+    public static final String INVALID_APPOINTMENT_DATE = "Invalid or missing date input.";
 }
+
