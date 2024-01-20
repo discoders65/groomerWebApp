@@ -2,6 +2,7 @@ package com.wjadczak.groomerWebApp.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,10 +12,11 @@ import java.util.UUID;
 
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name="appointment")
 @Getter
+@Builder
 public class AppointmentEntity {
 
     @Id

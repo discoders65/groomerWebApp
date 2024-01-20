@@ -29,5 +29,13 @@ public class ExceptionHandlers {
     public ResponseEntity<String> handleUsernameNotFoundException(UsernameNotFoundException usernameNotFoundException){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(usernameNotFoundException.getMessage());
     }
+    @ExceptionHandler(AppointmentNotFoundException.class)
+    public ResponseEntity<String> handleAppointmentNotFoundException(AppointmentNotFoundException appointmentNotFoundException){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(appointmentNotFoundException.getMessage());
+    }
+    @ExceptionHandler(InvalidSaveAppointmentDataInputException.class)
+    public ResponseEntity<String> handleInvalidAppointmentDataInputException(InvalidSaveAppointmentDataInputException invalidSaveAppointmentDataInputException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(invalidSaveAppointmentDataInputException.getMessage());
+    }
 }
 
