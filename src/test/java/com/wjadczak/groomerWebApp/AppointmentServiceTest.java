@@ -45,7 +45,6 @@ public class AppointmentServiceTest {
     void shouldReturnAppointmentListIfReceivedValidInput() {
         // given
         AppointmentSearchRequestDto requestDtoMock = new AppointmentSearchRequestDto(TestUtils.VALID_APPOINTMENT_START_DATE, TestUtils.VALID_APPOINTMENT_END_DATE);
-
         // when
         Mockito.when(
                         appointmentRepositoryMock
