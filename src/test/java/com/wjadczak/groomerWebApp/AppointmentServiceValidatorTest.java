@@ -1,6 +1,7 @@
 package com.wjadczak.groomerWebApp;
 
 import com.wjadczak.groomerWebApp.dto.AppointmentSearchRequestDto;
+import com.wjadczak.groomerWebApp.dto.CancelAppointmentDto;
 import com.wjadczak.groomerWebApp.errors.InvalidSearchRequestException;
 import com.wjadczak.groomerWebApp.service.validators.AppointmentServiceValidator;
 import org.junit.jupiter.api.Assertions;
@@ -13,6 +14,20 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class AppointmentServiceValidatorTest {
     @InjectMocks
     private AppointmentServiceValidator appointmentServiceValidator;
+
+    @Test
+    void shouldThrowInvalidSearchRequestExceptionIfCancelAppointmentDtoIsNull() {
+        // given & then
+        Assertions.assertThrows(InvalidSearchRequestException.class, () -> appointmentServiceValidator.validateCancelAppointmentDto(null));
+    }
+
+    @Test
+    void shouldThrowInvalidSearchRequestExceptionIfappointmentIdIsNull() {
+        // given
+        CancelAppointmentDto cancelDto = new CancelAppointmentDto(null);
+        // then
+        Assertions.assertThrows(InvalidSearchRequestException.class, () -> appointmentServiceValidator.validateCancelAppointmentDto(cancelDto));
+    }
 
     @Test
     void shouldThrowInvalidSearchRequestExceptionIfStartDate() {

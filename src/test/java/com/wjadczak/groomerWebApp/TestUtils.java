@@ -26,7 +26,9 @@ public class TestUtils {
                     "comment",
                     Mockito.mock(UserEntity.class),
                     new BigDecimal("100"),
+                    false,
                     false));
     public static final  String NON_EXITENT_EMAIL = "nonexistent@nonexistent.com";
+    public static final UUID NON_EXISTENT_APPOINTMENT_ID = UUID.fromString("b49c15fa-3e57-41e5-a640-c752956314e3");
 
 }

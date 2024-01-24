@@ -2,6 +2,7 @@ package com.wjadczak.groomerWebApp.service.validators;
 
 import com.wjadczak.groomerWebApp.dto.AppointmentSaveRequestDto;
 import com.wjadczak.groomerWebApp.dto.AppointmentSearchRequestDto;
+import com.wjadczak.groomerWebApp.dto.CancelAppointmentDto;
 import com.wjadczak.groomerWebApp.errors.ErrorMessages;
 import com.wjadczak.groomerWebApp.errors.InvalidSaveAppointmentDataInputException;
 import com.wjadczak.groomerWebApp.errors.InvalidSearchRequestException;
@@ -13,6 +14,18 @@ import static java.util.Objects.nonNull;
 @Slf4j
 @Component
 public class AppointmentServiceValidator {
+
+    public void validateCancelAppointmentDto(CancelAppointmentDto cancelAppointmentDto){
+        if (nonNull(cancelAppointmentDto)){
+            boolean appointmentIdIsNull = isNull(cancelAppointmentDto.getAppointmentId());
+            if(appointmentIdIsNull){
+                throw new InvalidSearchRequestException(ErrorMessages.NULL_INPUT);
+            }
+        } else {
+            log.error("Received null input for cancelAppointmentDto");
+            throw new InvalidSearchRequestException(ErrorMessages.NULL_INPUT);
+        }
+    }
 
     public void validateAppointmentSearchData(AppointmentSearchRequestDto appointmentSearchRequestDto) {
         log.debug("Validating date-time input: {}", appointmentSearchRequestDto);

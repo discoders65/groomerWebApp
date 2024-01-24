@@ -19,5 +19,7 @@ public class ErrorMessages {
     public static final String MISSING_SEARCH_INPUT = "Must provide a start and/or end date to retrieve calendar appointments.";
     public static final String APPOINTMENT_NOT_FOUND = "Appointment sought within the specified date range was not found.";
     public static final String INVALID_APPOINTMENT_DATE = "Invalid or missing date input.";
+    public static final String INVALID_APPOINTMENT_ID = "Appointment with specified ID not found.";
+    public static final String NULL_INPUT = "Request data cannot be null.";
 }
 

@@ -3,6 +3,7 @@ package com.wjadczak.groomerWebApp.service.implementation;
 import com.wjadczak.groomerWebApp.dto.AppointmentDto;
 import com.wjadczak.groomerWebApp.dto.AppointmentSaveRequestDto;
 import com.wjadczak.groomerWebApp.dto.AppointmentSearchRequestDto;
+import com.wjadczak.groomerWebApp.dto.CancelAppointmentDto;
 import com.wjadczak.groomerWebApp.entity.AppointmentEntity;
 import com.wjadczak.groomerWebApp.entity.UserEntity;
 import com.wjadczak.groomerWebApp.errors.AppointmentNotFoundException;
@@ -34,6 +35,16 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentServiceValidator appointmentServiceValidator;
 
     @Override
+    public void cancelAppointment(CancelAppointmentDto cancelAppointmentDto) {
+        appointmentServiceValidator.validateCancelAppointmentDto(cancelAppointmentDto);
+        AppointmentEntity appointmentEntity = appointmentRepository
+                .findById(cancelAppointmentDto.getAppointmentId())
+                .orElseThrow(() -> new AppointmentNotFoundException(ErrorMessages.INVALID_APPOINTMENT_ID));
+        appointmentEntity.setCancelled(true);
+        appointmentRepository.save(appointmentEntity);
+    }
+
+    @Override
     public List<AppointmentDto> findAppointment(AppointmentSearchRequestDto appointmentSearchRequestDto) {
         log.debug("Entering findAppointment method with search request: {}", appointmentSearchRequestDto);
         appointmentServiceValidator.validateAppointmentSearchData(appointmentSearchRequestDto);
@@ -55,6 +66,8 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .builder()
                 .dateStart(startDateTime)
                 .userEntity(currentUser)
+                .accepted(false)
+                .cancelled(false)
                 .build();
 
         appointmentRepository.save(newAppointment);
