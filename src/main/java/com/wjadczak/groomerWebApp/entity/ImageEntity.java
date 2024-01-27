@@ -27,7 +27,7 @@ public class ImageEntity {
     private UserEntity userEntity;
 
     @Lob
-    @Column(name = "image_data", columnDefinition = "BYTEA")
+    @Column(name = "image_data")
     private byte[] imageData;
 
 }

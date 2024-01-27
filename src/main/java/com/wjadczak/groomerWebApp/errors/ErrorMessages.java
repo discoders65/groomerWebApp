@@ -21,5 +21,8 @@ public class ErrorMessages {
     public static final String INVALID_APPOINTMENT_DATE = "Invalid or missing date input.";
     public static final String INVALID_APPOINTMENT_ID = "Appointment with specified ID not found.";
     public static final String NULL_INPUT = "Request data cannot be null.";
+    // Image errors:
+    public static final String NULL_IMAGE = "Image file cannot be null.";
+    public static final String IMAGE_TOO_LARGE = "Image file size exceeds allowed 10mb limit.";
 }
 

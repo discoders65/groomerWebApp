@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ImageRepository extends JpaRepository<ImageEntity, UUID> {
-    Optional<ImageEntity> findByName(String name);
+    Optional<ImageEntity> findById(UUID id);
 }
