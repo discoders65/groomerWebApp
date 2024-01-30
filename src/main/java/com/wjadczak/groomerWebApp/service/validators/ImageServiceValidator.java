@@ -8,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 @Component
 public class ImageServiceValidator {
-
     public void validateImageFile(MultipartFile imageFile) {
 
         if (imageFile == null) {
@@ -18,6 +17,10 @@ public class ImageServiceValidator {
             log.error("Image file too large: " + imageFile.getSize());
             throw new IllegalArgumentException(ErrorMessages.IMAGE_TOO_LARGE);
         }
+
+    }
+
+    public void checkIfImageAlreadyUploaded(){
 
     }
 }

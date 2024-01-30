@@ -24,5 +24,7 @@ public class ErrorMessages {
     // Image errors:
     public static final String NULL_IMAGE = "Image file cannot be null.";
     public static final String IMAGE_TOO_LARGE = "Image file size exceeds allowed 10mb limit.";
+    public static final String INVALID_ID = "Provided id not found.";
+    public static final String IMAGE_ALREADY_EXISTS = "This user already uploaded an image.";
 }
 

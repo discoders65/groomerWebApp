@@ -44,5 +44,15 @@ public class ExceptionHandlers {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(invalidSaveAppointmentDataInputException.getMessage());
     }
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException entityNotFoundException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(entityNotFoundException.getMessage());
+    }
+
+    @ExceptionHandler(ImageAlreadyExistsException.class)
+    public ResponseEntity<String> handleImageAlreadyExistsException(ImageAlreadyExistsException imageAlreadyExistsException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(imageAlreadyExistsException.getMessage());
+    }
+
 }
 

@@ -1,6 +1,6 @@
 package com.wjadczak.groomerWebApp.controller;
 
-import com.wjadczak.groomerWebApp.entity.ImageEntity;
+import com.wjadczak.groomerWebApp.dto.ImageDto;
 import com.wjadczak.groomerWebApp.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +28,7 @@ public class ImageController {
 
     @GetMapping("download/{imageId}")
     public ResponseEntity<byte[]> downloadImage(@PathVariable UUID imageId) {
-        ImageEntity image = imageService.downloadImage(imageId);
+        ImageDto image = imageService.downloadImage(imageId);
         return  ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename\"" + image.getName() + "\"")
                 .body(image.getImageData());
