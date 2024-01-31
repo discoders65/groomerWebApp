@@ -6,7 +6,6 @@ import com.wjadczak.groomerWebApp.dto.CancelAppointmentDto;
 import com.wjadczak.groomerWebApp.errors.AppointmentNotFoundException;
 import com.wjadczak.groomerWebApp.repository.AppointmentRepository;
 import com.wjadczak.groomerWebApp.service.implementation.AppointmentServiceImpl;
-import com.wjadczak.groomerWebApp.service.validators.AppointmentServiceValidator;
 import com.wjadczak.groomerWebApp.utils.TimeParserUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,8 +25,6 @@ import static org.mockito.Mockito.when;
 public class AppointmentServiceTest {
     @Mock
     private AppointmentRepository appointmentRepositoryMock;
-    @Mock
-    private AppointmentServiceValidator appointmentServiceValidatorMock;
     @InjectMocks
     private AppointmentServiceImpl appointmentService;
 

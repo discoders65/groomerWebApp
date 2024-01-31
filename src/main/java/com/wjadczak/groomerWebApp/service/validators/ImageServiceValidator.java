@@ -19,8 +19,4 @@ public class ImageServiceValidator {
         }
 
     }
-
-    public void checkIfImageAlreadyUploaded(){
-
-    }
 }

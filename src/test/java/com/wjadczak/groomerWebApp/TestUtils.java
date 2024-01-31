@@ -18,6 +18,7 @@ public class TestUtils {
     public static final LocalDateTime VALID_START_DATE_TIME = LocalDateTime.of(2024, 1, 14, 12, 0,0);
     public static final LocalDateTime VALID_END_DATE_TIME = LocalDateTime.of(2024, 1, 14, 14, 0,0);
     public static final UUID NON_EXSITENT_USER_ID = UUID.fromString("548ac69c-a182-4a5d-9720-154e356a3d3f");
+    public static final UUID NON_EXSITENT_IMAGE_ID = UUID.fromString("c5dc3393-4a3f-41bf-b81d-4cc1b4dd71fc");
     public static final List<AppointmentEntity> VALID_APPOINTMENT = Arrays.asList(
             new AppointmentEntity(
                     UUID.randomUUID(),

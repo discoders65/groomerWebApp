@@ -12,12 +12,13 @@ import com.wjadczak.groomerWebApp.repository.ImageRepository;
 import com.wjadczak.groomerWebApp.service.ImageService;
 import com.wjadczak.groomerWebApp.service.validators.ImageServiceValidator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.UUID;
-
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -42,6 +43,7 @@ public class ImageServiceImpl implements ImageService {
 
             imageRepository.save(imageSaved);
         } else {
+            log.error("User with id: " + currentUser.getId() + " already uploaded image");
             throw new ImageAlreadyExistsException(ErrorMessages.IMAGE_ALREADY_EXISTS);
         }
     }
