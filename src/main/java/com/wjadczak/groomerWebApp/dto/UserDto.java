@@ -4,14 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
 public class UserDto {
-    private Long id;
+
+    private UUID id;
     private String name;
     private String userName;
     private String email;
-
+    private int mobile;
 
 }

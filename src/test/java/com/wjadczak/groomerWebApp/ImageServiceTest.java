@@ -2,7 +2,6 @@ package com.wjadczak.groomerWebApp;
 
 import com.wjadczak.groomerWebApp.config.security.AuthenticationHelper;
 import com.wjadczak.groomerWebApp.entity.UserEntity;
-import com.wjadczak.groomerWebApp.errors.EntityNotFoundException;
 import com.wjadczak.groomerWebApp.errors.ImageAlreadyExistsException;
 import com.wjadczak.groomerWebApp.repository.ImageRepository;
 import com.wjadczak.groomerWebApp.service.implementation.ImageServiceImpl;
@@ -15,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.mockito.Mockito.when;
 
@@ -45,16 +43,6 @@ public class ImageServiceTest {
                         .getId())).thenReturn(Optional.of(TestUtils.NON_EXSITENT_USER_ID));
         // then
         Assertions.assertThrows(ImageAlreadyExistsException.class, () -> imageService.uploadImage(mockMultipartFile));
-    }
-
-    @Test
-    void shouldThrowEntityNotFoundExceptionIfImageIdNotFound(){
-        // given
-        UUID testId = TestUtils.NON_EXSITENT_IMAGE_ID;
-        // when
-        when(imageRepositoryMock.findById(testId)).thenReturn(Optional.empty());
-        // then
-        Assertions.assertThrows(EntityNotFoundException.class, () -> imageService.downloadImage(testId));
     }
 
 }

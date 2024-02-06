@@ -21,7 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CalendarController {
 
-
     private final AppointmentService appointmentService;
 
     @PostMapping("/search")
@@ -40,7 +39,7 @@ public class CalendarController {
 
     @PutMapping("/cancel")
     public ResponseEntity<Void> cancelAppointment(@RequestBody CancelAppointmentDto cancelAppointmentDto) throws AppointmentNotFoundException {
-        appointmentService.cancelAppointment(cancelAppointmentDto);
+        appointmentService.cancelCurrentUserAppointment(cancelAppointmentDto);
         return ResponseEntity.status(HttpStatus.ACCEPTED)
                 .build();
     }

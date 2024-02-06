@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface AppointmentRepository extends JpaRepository<AppointmentEntity, UUID> {
 
     List<AppointmentEntity> findByDateStartBetween(LocalDateTime dateStart, LocalDateTime dateEnd);
+
 }

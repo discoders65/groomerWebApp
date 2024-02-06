@@ -29,15 +29,16 @@ public class AppointmentServiceTest {
     private AppointmentServiceImpl appointmentService;
 
     @Test
-    void shouldThrowAppointmentNotFoundExceptionIfGivenWrongId(){
+    void shouldThrowAppointmentNotFoundExceptionIfGivenWrongId() {
         // given
         CancelAppointmentDto cancelDto = new CancelAppointmentDto(TestUtils.NON_EXISTENT_APPOINTMENT_ID);
         // when
         when(appointmentRepositoryMock.findById(cancelDto.getAppointmentId())).thenReturn(Optional.empty());
         // then
-        Assertions.assertThrows(AppointmentNotFoundException.class, () -> appointmentService.cancelAppointment(cancelDto));
+        Assertions.assertThrows(AppointmentNotFoundException.class, () -> appointmentService.cancelCurrentUserAppointment(cancelDto));
 
     }
+
     @Test
     void shouldThrowAppointmentNotFoundExceptionIfNoAppointmentFound() {
         // given
@@ -56,9 +57,8 @@ public class AppointmentServiceTest {
         // given
         AppointmentSearchRequestDto requestDtoMock = new AppointmentSearchRequestDto(TestUtils.VALID_APPOINTMENT_START_DATE, TestUtils.VALID_APPOINTMENT_END_DATE);
         // when
-        when(
-                        appointmentRepositoryMock
-                                .findByDateStartBetween(TestUtils.VALID_START_DATE_TIME, TestUtils.VALID_END_DATE_TIME))
+        when(appointmentRepositoryMock
+                .findByDateStartBetween(TestUtils.VALID_START_DATE_TIME, TestUtils.VALID_END_DATE_TIME))
                 .thenReturn(TestUtils.VALID_APPOINTMENT);
 
         List<AppointmentDto> result = appointmentService.findAppointment(requestDtoMock);

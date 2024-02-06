@@ -13,7 +13,7 @@ public interface AppointmentToAppointmentDtoMapper {
     AppointmentToAppointmentDtoMapper appointmentToAppointmentDtoMapper = Mappers.getMapper(AppointmentToAppointmentDtoMapper.class);
 
     @Mapping(target = "userId", expression = "java(appointment.getUserEntity().getId())")
-    AppointmentDto mapAppointmentEntityToDto(AppointmentEntity appointment);
+    AppointmentDto mapAppointmentToDto(AppointmentEntity appointment);
 
-    List<AppointmentDto> mapAppointmentEntitiesToDtos(List<AppointmentEntity> appointmentList);
+    List<AppointmentDto> mapAppointmentsToDtos(List<AppointmentEntity> appointmentList);
 }
