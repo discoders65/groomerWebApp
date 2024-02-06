@@ -1,10 +1,7 @@
 package com.wjadczak.groomerWebApp.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name="appointment")
 @Getter
+@Setter
 @Builder
 public class AppointmentEntity {
 
@@ -35,4 +33,6 @@ public class AppointmentEntity {
     private BigDecimal pricing; //BigDecimal
     @Column
     private boolean accepted;
+    @Column
+    private boolean cancelled;
 }
