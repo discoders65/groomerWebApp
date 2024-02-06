@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/image")
@@ -26,11 +25,12 @@ public class ImageController {
                 .build();
     }
 
-    @GetMapping("download/{imageId}")
-    public ResponseEntity<byte[]> downloadImage(@PathVariable UUID imageId) {
-        ImageDto image = imageService.downloadImage(imageId);
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> downloadImage(){
+        ImageDto image = imageService.downloadCurrentUserImage();
         return  ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename\"" + image.getName() + "\"")
                 .body(image.getImageData());
     }
+
 }

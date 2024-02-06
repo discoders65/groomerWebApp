@@ -30,7 +30,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AuthenticationHelper authenticationHelper;
 
     @Override
-    public void cancelAppointment(CancelAppointmentDto cancelAppointmentDto) {
+    public void cancelCurrentUserAppointment(CancelAppointmentDto cancelAppointmentDto) {
         appointmentServiceValidator.validateCancelAppointmentDto(cancelAppointmentDto);
         AppointmentEntity appointmentEntity = appointmentRepository
                 .findById(cancelAppointmentDto.getAppointmentId())
@@ -68,7 +68,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         log.debug("Finding appointments between {} and {}", dateStart, dateEnd);
         List<AppointmentDto> appointmentsFound = AppointmentToAppointmentDtoMapper
                 .appointmentToAppointmentDtoMapper
-                .mapAppointmentEntitiesToDtos(appointmentRepository.findByDateStartBetween(dateStart, dateEnd));
+                .mapAppointmentsToDtos(appointmentRepository.findByDateStartBetween(dateStart, dateEnd));
         if (appointmentsFound.isEmpty()) {
             throw new AppointmentNotFoundException(ErrorMessages.APPOINTMENT_NOT_FOUND);
         }

@@ -10,6 +10,6 @@ public interface AppointmentService {
 
     List<AppointmentDto> findAppointment(AppointmentSearchRequestDto appointmentSearchRequestDto);
     void saveAppointment(AppointmentSaveRequestDto appointmentSaveRequestDto);
-    void cancelAppointment(CancelAppointmentDto cancelAppointmentDto);
+    void cancelCurrentUserAppointment(CancelAppointmentDto cancelAppointmentDto);
 
 }

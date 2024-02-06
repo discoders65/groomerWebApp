@@ -12,4 +12,6 @@ public interface ImageRepository extends JpaRepository<ImageEntity, UUID> {
     Optional<ImageEntity> findById(UUID id);
     @Query("SELECT i.id FROM ImageEntity i WHERE i.userEntity.id = :userId")
     Optional<UUID> findImageIdByUserId(@Param("userId") UUID userId);
-}
+    @Query("SELECT i FROM ImageEntity i WHERE i.userEntity.id = :userId")
+    Optional<ImageEntity> findImageByUserId(@Param("userId")UUID id);
+ }

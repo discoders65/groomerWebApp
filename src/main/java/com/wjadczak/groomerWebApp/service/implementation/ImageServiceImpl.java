@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -49,10 +48,10 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public ImageDto downloadImage(UUID id) {
+    public ImageDto downloadCurrentUserImage() {
         ImageDto image = ImageToImageDtoMapper.imageToImageDtoMapper
                 .mapImagetoImageDto(imageRepository
-                        .findById(id)
+                        .findImageByUserId(authenticationHelper.getCurrentUser().getId())
                         .orElseThrow(() -> new EntityNotFoundException(ErrorMessages.INVALID_ID)));
         return image;
     }
