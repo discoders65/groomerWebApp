@@ -58,4 +58,13 @@ public class AdminServiceImpl implements AdminService {
         UserDto userDto = UserToUserDtoMapper.userToUserDtoMapper.mapUserToDto(user);
         return userDto;
     }
+
+    @Override
+    public void cancelAppointment(UUID id) {
+        AppointmentEntity appointment = appointmentRepository
+                .findById(id)
+                .orElseThrow(() -> new AppointmentNotFoundException(ErrorMessages.APPOINTMENT_NOT_FOUND));
+        appointment.setCancelled(true);
+        appointmentRepository.save(appointment);
+    }
 }
