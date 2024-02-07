@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/calendar")
 @RequiredArgsConstructor
-public class CalendarController {
+public class AppointmentController {
 
     private final AppointmentService appointmentService;
 

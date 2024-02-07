@@ -37,9 +37,9 @@ public class AdminController {
                 .body(adminService.getAllUsers());
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<UserDto> getUser(UUID userId) {
-        return ResponseEntity.status(HttpStatus.OK) //zmienić userId na dto
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<UserDto> getUser(@PathVariable  UUID userId) {
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(adminService.getUserById(userId));
     }
 

@@ -12,5 +12,5 @@ public interface AdminService {
     ImageDto downloadImage(UUID id);
     List<UserDto> getAllUsers();
     UserDto getUserById(UUID id);
-
+    void  cancelAppointment(UUID id);
 }
