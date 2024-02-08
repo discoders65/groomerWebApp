@@ -34,9 +34,6 @@ public class UserEntity implements UserDetails {
     private Role role;
     @Column
     private int mobile;
-    @Lob
-    @Column(columnDefinition = "bytea")
-    private byte[] picture;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
