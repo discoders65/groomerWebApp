@@ -1,6 +1,7 @@
 package com.wjadczak.groomerWebApp.controller;
 
 import com.wjadczak.groomerWebApp.dto.ImageDto;
+import com.wjadczak.groomerWebApp.dto.ImageIdDto;
 import com.wjadczak.groomerWebApp.dto.UserDto;
 import com.wjadczak.groomerWebApp.service.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +18,9 @@ import java.util.UUID;
 public class AdminController {
 
     private final AdminService adminService;
-    @GetMapping("/download/{imageId}")
-    public ResponseEntity<byte[]> downloadImage(@PathVariable UUID imageId) {
-        ImageDto image = adminService.downloadImage(imageId);
+    @GetMapping("/download/image/")
+    public ResponseEntity<byte[]> downloadImage(@RequestBody ImageIdDto imageId) {
+        ImageDto image = adminService.downloadImage(imageId.getImageId());
         return  ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename\"" + image.getName() + "\"")
                 .body(image.getImageData());
