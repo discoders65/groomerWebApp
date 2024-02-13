@@ -54,14 +54,14 @@ public class AppointmentServiceValidator {
     public void validateAppointmentSearchData(AppointmentSearchRequestDto appointmentSearchRequestDto) {
         log.debug("Validating date-time input: {}", appointmentSearchRequestDto);
         if (nonNull(appointmentSearchRequestDto)) {
-            checkSearchDataInput(appointmentSearchRequestDto);
+            checkIfSearchDataInputIsNull(appointmentSearchRequestDto);
         } else {
             log.error("Invalid search request: null input");
             throw new InvalidSearchRequestException(ErrorMessages.MISSING_SEARCH_INPUT);
         }
     }
 
-    private void checkSearchDataInput(AppointmentSearchRequestDto appointmentSearchRequestDto) {
+    private void checkIfSearchDataInputIsNull(AppointmentSearchRequestDto appointmentSearchRequestDto) {
         String startDateTime = appointmentSearchRequestDto.getStartDateTime();
         String endDateTime = appointmentSearchRequestDto.getEndDateTime();
         boolean startDateIsNullOrEndDateIsNull = isNull(startDateTime) || isNull(endDateTime);

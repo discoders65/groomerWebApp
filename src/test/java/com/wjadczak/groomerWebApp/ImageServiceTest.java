@@ -2,6 +2,7 @@ package com.wjadczak.groomerWebApp;
 
 import com.wjadczak.groomerWebApp.config.security.AuthenticationHelper;
 import com.wjadczak.groomerWebApp.entity.UserEntity;
+import com.wjadczak.groomerWebApp.errors.EntityNotFoundException;
 import com.wjadczak.groomerWebApp.errors.ImageAlreadyExistsException;
 import com.wjadczak.groomerWebApp.repository.ImageRepository;
 import com.wjadczak.groomerWebApp.service.implementation.ImageServiceImpl;
@@ -43,6 +44,17 @@ public class ImageServiceTest {
                         .getId())).thenReturn(Optional.of(TestUtils.NON_EXSITENT_USER_ID));
         // then
         Assertions.assertThrows(ImageAlreadyExistsException.class, () -> imageService.uploadImage(mockMultipartFile));
+    }
+
+    @Test
+    void shouldThrowEntityNotFoundExceptionIfImageDoesntExist(){
+        // given
+        UserEntity mockUser = new UserEntity();
+        mockUser.setId(TestUtils.NON_EXSITENT_USER_ID);
+        // when
+        when(authenticationHelper.getCurrentUser()).thenReturn(mockUser);
+        // then
+        Assertions.assertThrows(EntityNotFoundException.class, () -> imageService.downloadCurrentUserImage());
     }
 
 }
