@@ -2,14 +2,14 @@ BEGIN;
 
 CREATE SCHEMA IF NOT EXISTS groomer
 
-    AUTHORIZATION postgres;
+    AUTHORIZATION groomer;
 
 COMMENT ON SCHEMA groomer
     IS 'standard public schema';
 
 GRANT ALL ON SCHEMA groomer TO PUBLIC;
 
-GRANT ALL ON SCHEMA groomer TO postgres;
+GRANT ALL ON SCHEMA groomer TO groomer;
 DROP EXTENSION IF EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
