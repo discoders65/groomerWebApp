@@ -1,0 +1,20 @@
+services:
+  app:
+    build: ..
+    ports:
+      - "8085:8081"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/groomer_db
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: groomer_db
+      POSTGRES_USER: groomer
+      POSTGRES_PASSWORD: XVX016_aerial
+    volumes:
+      - /home/wowo/Documents/dbContainer:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
