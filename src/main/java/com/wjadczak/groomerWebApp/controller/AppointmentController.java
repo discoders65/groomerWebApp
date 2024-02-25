@@ -23,21 +23,21 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
-    @PostMapping("/search")
+    @GetMapping
     public ResponseEntity<List<AppointmentDto>> findAppointment(@RequestBody AppointmentSearchRequestDto appointmentSearchRequestDto) throws InvalidSearchRequestException {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(appointmentService
                         .findAppointment(appointmentSearchRequestDto));
     }
 
-    @PostMapping("/save")
+    @PostMapping
     public ResponseEntity<Void> saveAppointment(@RequestBody AppointmentSaveRequestDto appointmentSaveRequestDto) throws InvalidSaveAppointmentDataInputException {
         appointmentService.saveAppointment(appointmentSaveRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .build();
     }
 
-    @PutMapping("/cancel")
+    @DeleteMapping
     public ResponseEntity<Void> cancelAppointment(@RequestBody CancelAppointmentDto cancelAppointmentDto) throws AppointmentNotFoundException {
         appointmentService.cancelCurrentUserAppointment(cancelAppointmentDto);
         return ResponseEntity.status(HttpStatus.ACCEPTED)
