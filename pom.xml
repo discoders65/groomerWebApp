@@ -22,8 +22,14 @@
 		<org.junit.jupiter.version>5.9.1</org.junit.jupiter.version>
 		<org.jacoco.version>0.8.11</org.jacoco.version>
 		<com.github.ulisesbocchio.version>3.0.5</com.github.ulisesbocchio.version>
+		<org.springdoc.version>2.2.0</org.springdoc.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${org.springdoc.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

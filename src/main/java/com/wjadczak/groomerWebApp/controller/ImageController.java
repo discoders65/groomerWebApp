@@ -18,14 +18,14 @@ public class ImageController {
 
     private final ImageService imageService;
 
-    @PostMapping("/upload")
+    @PostMapping
     public ResponseEntity<Void> uploadImage(@RequestParam("image") MultipartFile imageFile) throws IOException {
         imageService.uploadImage(imageFile);
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
     }
 
-    @GetMapping("/download")
+    @GetMapping
     public ResponseEntity<byte[]> downloadImage(){
         ImageDto image = imageService.downloadCurrentUserImage();
         return  ResponseEntity.status(HttpStatus.OK)
