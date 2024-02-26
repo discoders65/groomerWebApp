@@ -52,7 +52,7 @@ public class ImageServiceImpl implements ImageService {
         ImageDto image = ImageToImageDtoMapper.imageToImageDtoMapper
                 .mapImagetoImageDto(imageRepository
                         .findImageByUserId(authenticationHelper.getCurrentUser().getId())
-                        .orElseThrow(() -> new EntityNotFoundException(ErrorMessages.INVALID_ID)));
+                        .orElseThrow(() -> new EntityNotFoundException(ErrorMessages.IMAGE_NOT_FOUND)));
         return image;
     }
 

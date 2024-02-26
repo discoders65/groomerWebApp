@@ -40,18 +40,23 @@ public class ExceptionHandlers {
     }
 
     @ExceptionHandler(InvalidSaveAppointmentDataInputException.class)
-    public ResponseEntity<String> handleInvalidAppointmentDataInputException(InvalidSaveAppointmentDataInputException invalidSaveAppointmentDataInputException){
+    public ResponseEntity<String> handleInvalidSaveAppointmentDataInputException(InvalidSaveAppointmentDataInputException invalidSaveAppointmentDataInputException){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(invalidSaveAppointmentDataInputException.getMessage());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException entityNotFoundException){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(entityNotFoundException.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(entityNotFoundException.getMessage());
     }
 
     @ExceptionHandler(ImageAlreadyExistsException.class)
     public ResponseEntity<String> handleImageAlreadyExistsException(ImageAlreadyExistsException imageAlreadyExistsException){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(imageAlreadyExistsException.getMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException illegalArgumentException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(illegalArgumentException.getMessage());
     }
 
 }

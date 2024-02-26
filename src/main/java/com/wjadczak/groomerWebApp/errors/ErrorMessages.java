@@ -23,6 +23,7 @@ public class ErrorMessages {
     public static final String NULL_INPUT = "Request data cannot be null.";
     public static final String APPOINTMENT_NOT_OWNED = "Requested appointment resource is not owned by current user";
     // Image errors:
+    public static final String IMAGE_NOT_FOUND = "No image uploaded.";
     public static final String NULL_IMAGE = "Image file cannot be null.";
     public static final String IMAGE_TOO_LARGE = "Image file size exceeds allowed 10mb limit.";
     public static final String INVALID_ID = "Provided id not found.";
