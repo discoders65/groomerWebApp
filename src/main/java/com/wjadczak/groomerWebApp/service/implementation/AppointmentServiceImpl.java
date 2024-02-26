@@ -69,9 +69,6 @@ public class AppointmentServiceImpl implements AppointmentService {
         List<AppointmentDto> appointmentsFound = AppointmentToAppointmentDtoMapper
                 .appointmentToAppointmentDtoMapper
                 .mapAppointmentsToDtos(appointmentRepository.findByDateStartBetween(dateStart, dateEnd));
-        if (appointmentsFound.isEmpty()) {
-            throw new AppointmentNotFoundException(ErrorMessages.APPOINTMENT_NOT_FOUND);
-        }
         log.debug("Found {} appointments between {} and {}", appointmentsFound.size(), dateStart, dateEnd);
         return appointmentsFound;
     }

@@ -2,6 +2,9 @@ package com.wjadczak.groomerWebApp.controller;
 
 import com.wjadczak.groomerWebApp.dto.ImageDto;
 import com.wjadczak.groomerWebApp.service.ImageService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,28 @@ public class ImageController {
 
     private final ImageService imageService;
 
+    @Operation(
+            summary = "Saves image provided in form of multipart-file (user can own only one in database)",
+            description = "Image file cannot be larger than 10mb",
+            responses = {
+                    @ApiResponse(
+                            description = "OK",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Currently logged user already uploaded an image.",
+                            responseCode = "400"
+                    ),
+                    @ApiResponse(
+                            description = "Null image-file input",
+                            responseCode = "400"
+                    ),
+                    @ApiResponse(
+                            description = "Image-file larger than 10mb",
+                            responseCode = "400"
+                    )
+            }
+    )
     @PostMapping
     public ResponseEntity<Void> uploadImage(@RequestParam("image") MultipartFile imageFile) throws IOException {
         imageService.uploadImage(imageFile);
@@ -25,6 +50,24 @@ public class ImageController {
                 .build();
     }
 
+    @Operation(
+            summary = "Get image owned by current user (user can own only one in database)",
+            description = "Returns image in form of byte array if found in database",
+            responses = {
+                    @ApiResponse(
+                            description = "OK",
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "byte[]"
+                            )
+                    ),
+                    @ApiResponse(
+                            description = "Currently logged user do not own image yet.",
+                            responseCode = "404"
+                    )
+
+            }
+    )
     @GetMapping
     public ResponseEntity<byte[]> downloadImage(){
         ImageDto image = imageService.downloadCurrentUserImage();

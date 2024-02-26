@@ -7,7 +7,6 @@ import com.wjadczak.groomerWebApp.errors.AppointmentNotFoundException;
 import com.wjadczak.groomerWebApp.repository.AppointmentRepository;
 import com.wjadczak.groomerWebApp.service.implementation.AppointmentServiceImpl;
 import com.wjadczak.groomerWebApp.service.validators.AppointmentServiceValidator;
-import com.wjadczak.groomerWebApp.utils.TimeParserUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,8 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,20 +39,6 @@ public class AppointmentServiceTest {
         // then
         Assertions.assertThrows(AppointmentNotFoundException.class, () -> appointmentService.cancelCurrentUserAppointment(cancelDto));
 
-    }
-
-    @Test
-    void shouldThrowAppointmentNotFoundExceptionIfNoAppointmentFound() {
-        // given
-        AppointmentSearchRequestDto requestDto = new AppointmentSearchRequestDto(TestUtils.INVALID_APPOINTMENT_DATE, TestUtils.INVALID_APPOINTMENT_DATE);
-        LocalDateTime startDateTime = TimeParserUtil.parseDateTime(requestDto.getStartDateTime());
-        LocalDateTime endDateTime = TimeParserUtil.parseDateTime(requestDto.getEndDateTime());
-        // when
-        doNothing().when(appointmentServiceValidator).validateAppointmentSearchData(requestDto);
-        when(appointmentRepositoryMock.findByDateStartBetween(startDateTime, endDateTime))
-                .thenReturn(Collections.emptyList());
-        // then
-        Assertions.assertThrows(AppointmentNotFoundException.class, () -> appointmentService.findAppointment(requestDto));
     }
 
     @Test
