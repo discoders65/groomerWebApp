@@ -3,11 +3,13 @@ package com.wjadczak.groomerWebApp.controller;
 import com.wjadczak.groomerWebApp.dto.ImageDto;
 import com.wjadczak.groomerWebApp.service.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,21 +26,23 @@ public class ImageController {
     @Operation(
             summary = "Saves image provided in form of multipart-file (user can own only one in database)",
             description = "Image file cannot be larger than 10mb",
+            parameters = {
+                    @Parameter(
+                            name = "image",
+                            description = "Image file to upload",
+                            required = true,
+                            content = @Content(
+                                    mediaType = "multipart/form-data"
+                            )
+                    )
+            },
             responses = {
                     @ApiResponse(
                             description = "OK",
                             responseCode = "200"
                     ),
                     @ApiResponse(
-                            description = "Currently logged user already uploaded an image.",
-                            responseCode = "400"
-                    ),
-                    @ApiResponse(
-                            description = "Null image-file input",
-                            responseCode = "400"
-                    ),
-                    @ApiResponse(
-                            description = "Image-file larger than 10mb",
+                            description = "Currently logged user already uploaded an image OR Null image-file input OR Image-file larger than 10mb",
                             responseCode = "400"
                     )
             }
@@ -58,7 +62,7 @@ public class ImageController {
                             description = "OK",
                             responseCode = "200",
                             content = @Content(
-                                    mediaType = "byte[]"
+                                    mediaType = MediaType.IMAGE_JPEG_VALUE
                             )
                     ),
                     @ApiResponse(

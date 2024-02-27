@@ -1,0 +1,423 @@
+openapi: 3.0.1
+info:
+  title: GroomerWebApp API specification
+  description: OpenApi documentation for GroomerWebApp
+  contact:
+    name: Wojciech Jadczak
+    url: https://github.com/w-jadczak
+    email: w.jadczak@yahoo.com
+  version: '1.0'
+servers:
+  - url: http://localhost:8081
+    description: Local dev server
+  - url: TBA
+    description: Production server
+security:
+  - bearerAuth: []
+tags:
+  - name: admin-controller
+    description: Can be accessed only by admin
+paths:
+  /api/v1/admin/appointment/{appointmentId}:
+    put:
+      tags:
+        - admin-controller
+      summary: Confirms appointment by url-provided Id
+      description: Appointment must exist
+      operationId: confirmAppointment
+      parameters:
+        - name: imageId
+          in: query
+          description: Existing appointment Id
+          example: 548ac69c-a182-4a5d-9720-154e356a3d3f
+        - name: appointmentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Invalid Id provided
+    delete:
+      tags:
+        - admin-controller
+      summary: Cancels appointment by url-provided Id
+      description: Appointment must exist
+      operationId: cancelAppointment_1
+      parameters:
+        - name: imageId
+          in: query
+          description: Existing appointment Id
+          example: 548ac69c-a182-4a5d-9720-154e356a3d3f
+        - name: appointmentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Invalid Id provided
+  /api/v1/image:
+    get:
+      tags:
+        - image-controller
+      summary: Get image owned by current user (user can own only one in database)
+      description: Returns image in form of byte array if found in database
+      operationId: downloadImage
+      responses:
+        '200':
+          description: OK
+          content:
+            image/jpeg: {}
+        '404':
+          description: Currently logged user do not own image yet.
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: byte
+    post:
+      tags:
+        - image-controller
+      summary: Saves image provided in form of multipart-file (user can own only one in database)
+      description: Image file cannot be larger than 10mb
+      operationId: uploadImage
+      parameters:
+        - name: image
+          in: query
+          description: Image file to upload
+          required: true
+          content:
+            multipart/form-data: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - image
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Currently logged user already uploaded an image OR Null image-file input OR Image-file larger than 10mb
+  /api/v1/calendar:
+    get:
+      tags:
+        - appointment-controller
+      summary: Returns list of appointments found between provided date-time input
+      description: Returns nothing if no appointment found
+      operationId: findAppointment
+      parameters:
+        - name: appointmentSearchRequestDto
+          in: query
+          description: Appointment search request object
+          required: true
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AppointmentSearchRequestDto'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentDto'
+        '400':
+          description: Invalid or null date-time input provided
+    post:
+      tags:
+        - appointment-controller
+      summary: Saves appointment defined by provided date-time input
+      description: Appointment must exist
+      operationId: saveAppointment
+      parameters:
+        - name: appointmentSaveRequestDto
+          in: query
+          description: Appointment save request object
+          required: true
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AppointmentSaveRequestDto'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppointmentSaveRequestDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid or null date-time input
+    delete:
+      tags:
+        - appointment-controller
+      summary: Cancels appointment by defined provided date-time input
+      description: Appointment must exist & must be owned by currently logged user
+      operationId: cancelAppointment
+      parameters:
+        - name: cancelAppointmentDto
+          in: query
+          description: Appointment cancel request object
+          required: true
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CancelAppointmentDto'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelAppointmentDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Invalid Id provided
+  /api/v1/auth/signup:
+    post:
+      tags:
+        - authentication-controller
+      summary: Saves user to database
+      description: 'Username and email must be unique, password must have min. 8 characters and contain at least one special character: !@#$%^&*()_+=-?|:;''.,/<>][{}'
+      operationId: signUp
+      parameters:
+        - name: signUpDto
+          in: query
+          description: User registration information
+          required: true
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SignUpDto'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        '400':
+          description: Password to short or no special character provided OR Username or mail already exists OR Copy string literal text to the clipboard
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/auth/signin:
+    post:
+      tags:
+        - authentication-controller
+      summary: User login
+      description: Returns JWT token, valid for 30min
+      operationId: signIn
+      parameters:
+        - name: signInDto
+          in: query
+          description: User sign-in information
+          required: true
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SignInDto'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/JwtAuthenticationResponseDto'
+        '400':
+          description: Invalid username or mail
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/JwtAuthenticationResponseDto'
+  /api/v1/admin/user:
+    get:
+      tags:
+        - admin-controller
+      summary: Gets all users from database
+      description: Returns nothing if no user found in database
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+  /api/v1/admin/user/{userId}:
+    get:
+      tags:
+        - admin-controller
+      summary: Gets user by url-provided Id
+      description: User must exist
+      operationId: getUser
+      parameters:
+        - name: imageId
+          in: query
+          description: Existing user Id
+          example: 548ac69c-a182-4a5d-9720-154e356a3d3f
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        '404':
+          description: Invalid Id provided
+  /api/v1/admin/image/{imageId}:
+    get:
+      tags:
+        - admin-controller
+      summary: Get image by url-provided Id
+      description: Image must exist
+      operationId: downloadImage_1
+      parameters:
+        - name: imageId
+          in: path
+          description: Existing image Id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 548ac69c-a182-4a5d-9720-154e356a3d3f
+      responses:
+        '200':
+          description: OK
+          content:
+            image/jpeg: {}
+        '404':
+          description: Invalid Id provided
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: byte
+components:
+  schemas:
+    AppointmentSaveRequestDto:
+      type: object
+      properties:
+        startDateTime:
+          type: string
+    SignUpDto:
+      type: object
+      properties:
+        name:
+          type: string
+        userName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        mobile:
+          type: integer
+          format: int32
+    SignInDto:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    JwtAuthenticationResponseDto:
+      type: object
+      properties:
+        token:
+          type: string
+    AppointmentSearchRequestDto:
+      type: object
+      properties:
+        startDateTime:
+          type: string
+        endDateTime:
+          type: string
+    AppointmentDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        dateStart:
+          type: string
+          format: date-time
+        dateEnd:
+          type: string
+          format: date-time
+        comment:
+          type: string
+        userId:
+          type: string
+          format: uuid
+        pricing:
+          type: number
+          format: double
+        accepted:
+          type: boolean
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        userName:
+          type: string
+        email:
+          type: string
+        mobile:
+          type: integer
+          format: int32
+    CancelAppointmentDto:
+      type: object
+      properties:
+        appointmentId:
+          type: string
+          format: uuid
+  securitySchemes:
+    bearerAuth:
+      type: http
+      description: JWT auth description
+      in: header
+      scheme: bearer
+      bearerFormat: JWT
