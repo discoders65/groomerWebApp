@@ -11,14 +11,14 @@ import io.swagger.v3.oas.annotations.servers.Server;
 
 @OpenAPIDefinition(
         info = @Info(
+                title = "GroomerWebApp API specification",
                 contact = @Contact(
                         name = "Wojciech Jadczak",
                         email = "w.jadczak@yahoo.com",
                         url = "https://github.com/w-jadczak"
 
                 ),
-                description = "OpenApi documentation for groomerWebApp",
-                title = "OpenApi specification",
+                description = "OpenApi documentation for GroomerWebApp",
                 version = "1.0"
         ),
         servers = {
