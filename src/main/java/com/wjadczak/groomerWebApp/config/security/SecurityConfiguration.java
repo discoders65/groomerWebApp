@@ -29,7 +29,8 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers("/api/v1/auth/**").permitAll();
-                    request.requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN").anyRequest().permitAll();
+                    request.requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
+                            .anyRequest().permitAll();
                 })
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

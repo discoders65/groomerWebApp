@@ -1,5 +1,6 @@
-package com.wjadczak.groomerWebApp;
+package com.wjadczak.groomerWebApp.unit;
 
+import com.wjadczak.groomerWebApp.TestUtils;
 import com.wjadczak.groomerWebApp.config.security.AuthenticationHelper;
 import com.wjadczak.groomerWebApp.entity.UserEntity;
 import com.wjadczak.groomerWebApp.errors.EntityNotFoundException;

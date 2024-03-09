@@ -43,6 +43,9 @@
     <li>Springdoc OpenAPI</li>
     <li>Flyway</li>
     <li>Mapstruct</li>
+    <li>Testcontainers</li>
+    <li>JUnit</li>
+    <li>Mockito</li>
     <li>Lombok</li>
     <li>Jasypt</li>
     <li>Docker</li>

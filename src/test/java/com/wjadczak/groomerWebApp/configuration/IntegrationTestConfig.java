@@ -9,6 +9,8 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 @SpringBootTest
 @Testcontainers
@@ -17,6 +19,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 public class IntegrationTestConfig {
     @Autowired
     protected MockMvc mockMvc;
+    @Autowired
+    protected ObjectMapper objectMapper;
     protected static PostgreSQLContainer POSTGRESQL_CONTAINER = new PostgreSQLContainer<>("postgres:14");
     @DynamicPropertySource
     protected static void setProperties(DynamicPropertyRegistry dynamicPropertyRegistry){

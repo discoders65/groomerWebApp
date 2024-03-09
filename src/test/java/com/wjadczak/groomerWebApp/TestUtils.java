@@ -4,6 +4,7 @@ import com.wjadczak.groomerWebApp.entity.AppointmentEntity;
 import com.wjadczak.groomerWebApp.entity.Role;
 import com.wjadczak.groomerWebApp.entity.UserEntity;
 import org.mockito.Mockito;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -30,15 +31,20 @@ public class TestUtils {
                     new BigDecimal("100"),
                     false,
                     false));
-    public static final UserEntity TEST_USER = UserEntity.builder()
-            .userName("userName")
-            .id(UUID.randomUUID())
-            .email("email@email.com")
-            .mobile(123456789)
-            .name("user")
-            .password("password")
-            .role(Role.USER)
-            .build();
+    public static final UserEntity TEST_USER;
+    static {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode("Password!");
+        TEST_USER = UserEntity.builder()
+                .userName("userName")
+                .id(UUID.randomUUID())
+                .email("email@email.com")
+                .mobile(123456789)
+                .name("user")
+                .password(hashedPassword)
+                .role(Role.USER)
+                .build();
+    }
     public static final  String NON_EXITENT_EMAIL = "nonexistent@nonexistent.com";
     public static final UUID NON_EXISTENT_APPOINTMENT_ID = UUID.fromString("b49c15fa-3e57-41e5-a640-c752956314e3");
 
