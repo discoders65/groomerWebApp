@@ -49,11 +49,11 @@ public class AppointmentServiceTest {
         // when
         when(appointmentRepositoryMock
                 .findByDateStartBetween(TestUtils.VALID_START_DATE_TIME, TestUtils.VALID_END_DATE_TIME))
-                .thenReturn(TestUtils.TEST_APPOINTMENT);
+                .thenReturn(TestUtils.TEST_APPOINTMENTS);
 
         List<AppointmentDto> result = appointmentService.findAppointment(requestDtoMock);
         // then
-        Assertions.assertEquals(TestUtils.TEST_APPOINTMENT.size(), result.size());
+        Assertions.assertEquals(TestUtils.TEST_APPOINTMENTS.size(), result.size());
     }
 
 }

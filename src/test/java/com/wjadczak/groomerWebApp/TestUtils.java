@@ -21,7 +21,11 @@ public class TestUtils {
     public static final LocalDateTime VALID_END_DATE_TIME = LocalDateTime.of(2024, 1, 14, 14, 0,0);
     public static final UUID NON_EXSITENT_USER_ID = UUID.fromString("548ac69c-a182-4a5d-9720-154e356a3d3f");
     public static final UUID NON_EXSITENT_IMAGE_ID = UUID.fromString("c5dc3393-4a3f-41bf-b81d-4cc1b4dd71fc");
-    public static final List<AppointmentEntity> TEST_APPOINTMENT = Arrays.asList(
+    public static final UserEntity TEST_USER;
+    static {
+        TEST_USER = createUserEntity();
+    }
+    public static final List<AppointmentEntity> TEST_APPOINTMENTS = Arrays.asList(
             new AppointmentEntity(
                     UUID.randomUUID(),
                     VALID_START_DATE_TIME,
@@ -31,13 +35,23 @@ public class TestUtils {
                     new BigDecimal("100"),
                     false,
                     false));
-    public static final UserEntity TEST_USER;
-    static {
+    public static final AppointmentEntity TEST_APPOINTMENT = AppointmentEntity
+            .builder()
+            .id(UUID.randomUUID())
+            .dateStart(VALID_START_DATE_TIME)
+            .dateEnd(VALID_END_DATE_TIME)
+            .comment("comment")
+            .userEntity(TEST_USER)
+            .pricing(new BigDecimal("100"))
+            .accepted(false)
+            .cancelled(false)
+            .build();
+
+    private static UserEntity createUserEntity(){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode("Password!");
-        TEST_USER = UserEntity.builder()
+        return UserEntity.builder()
                 .userName("userName")
-                .id(UUID.randomUUID())
                 .email("email@email.com")
                 .mobile(123456789)
                 .name("user")

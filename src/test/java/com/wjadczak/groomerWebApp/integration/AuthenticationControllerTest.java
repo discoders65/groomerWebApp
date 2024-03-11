@@ -18,7 +18,7 @@ import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class AuthenticationControllerIntegrationTest extends IntegrationTestConfig {
+public class AuthenticationControllerTest extends IntegrationTestConfig {
     @Autowired
     private UserRepository userRepository;
 
@@ -71,7 +71,7 @@ public class AuthenticationControllerIntegrationTest extends IntegrationTestConf
     }
 
     @Test
-    void shouldReturnTokenIfSignInSucceed() throws Exception {
+    void shouldReturnStatusOkIfSignInSucceed() throws Exception {
         SignInDto signInDto = SignInDto.builder()
                 .email(TestUtils.TEST_USER.getEmail())
                 .password("Password!")
