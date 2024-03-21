@@ -1,6 +1,6 @@
 package com.wjadczak.groomerWebApp.unit;
 
-import com.wjadczak.groomerWebApp.TestUtils;
+import com.wjadczak.groomerWebApp.configuration.TestUtils;
 import com.wjadczak.groomerWebApp.dto.UserDto;
 import com.wjadczak.groomerWebApp.entity.AppointmentEntity;
 import com.wjadczak.groomerWebApp.entity.UserEntity;

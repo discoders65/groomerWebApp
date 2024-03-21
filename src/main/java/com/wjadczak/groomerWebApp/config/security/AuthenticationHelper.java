@@ -4,8 +4,7 @@ import com.wjadczak.groomerWebApp.entity.UserEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-// dopisać testy, sprawdzic co zwraca i w jakich sytuacjach
-// zgooglaj programowanie aspektowe
+
 @Component
 public class AuthenticationHelper {
 

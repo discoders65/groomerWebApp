@@ -1,6 +1,6 @@
 package com.wjadczak.groomerWebApp.unit;
 
-import com.wjadczak.groomerWebApp.TestUtils;
+import com.wjadczak.groomerWebApp.configuration.TestUtils;
 import com.wjadczak.groomerWebApp.repository.UserRepository;
 import com.wjadczak.groomerWebApp.service.implementation.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;

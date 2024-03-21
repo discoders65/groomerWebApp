@@ -1,5 +1,6 @@
-package com.wjadczak.groomerWebApp;
+package com.wjadczak.groomerWebApp.configuration;
 
+import com.wjadczak.groomerWebApp.dto.SignInDto;
 import com.wjadczak.groomerWebApp.entity.AppointmentEntity;
 import com.wjadczak.groomerWebApp.entity.Role;
 import com.wjadczak.groomerWebApp.entity.UserEntity;
@@ -15,13 +16,16 @@ import java.util.UUID;
 public class TestUtils {
 
     public static final String VALID_APPOINTMENT_START_DATE = "2024-01-14 12:00:00";
+    public static final String TEST_APPOINTMENT_START_DATE = "2024-02-14 12:00:00";
     public static final String VALID_APPOINTMENT_END_DATE = "2024-01-14 14:00:00";
     public static final String INVALID_APPOINTMENT_DATE = "1024-01-01 01:01:01";
+    public static final LocalDateTime TEST_START_DATE_TIME = LocalDateTime.of(2024, 2, 14, 12, 0,0);
     public static final LocalDateTime VALID_START_DATE_TIME = LocalDateTime.of(2024, 1, 14, 12, 0,0);
     public static final LocalDateTime VALID_END_DATE_TIME = LocalDateTime.of(2024, 1, 14, 14, 0,0);
     public static final UUID NON_EXSITENT_USER_ID = UUID.fromString("548ac69c-a182-4a5d-9720-154e356a3d3f");
     public static final UUID NON_EXSITENT_IMAGE_ID = UUID.fromString("c5dc3393-4a3f-41bf-b81d-4cc1b4dd71fc");
     public static final UserEntity TEST_USER;
+    public static final String TEST_USER_PASSWORD ="Password!";
     static {
         TEST_USER = createUserEntity();
     }
@@ -47,9 +51,9 @@ public class TestUtils {
             .cancelled(false)
             .build();
 
-    private static UserEntity createUserEntity(){
+    private static final UserEntity createUserEntity(){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode("Password!");
+        String hashedPassword = passwordEncoder.encode(TEST_USER_PASSWORD);
         return UserEntity.builder()
                 .userName("userName")
                 .email("email@email.com")
@@ -59,6 +63,10 @@ public class TestUtils {
                 .role(Role.USER)
                 .build();
     }
+    public static final SignInDto SIGN_IN_DTO = SignInDto.builder()
+            .email("email@email.com")
+            .password("Password!")
+            .build();
     public static final  String NON_EXITENT_EMAIL = "nonexistent@nonexistent.com";
     public static final UUID NON_EXISTENT_APPOINTMENT_ID = UUID.fromString("b49c15fa-3e57-41e5-a640-c752956314e3");
 

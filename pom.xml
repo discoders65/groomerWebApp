@@ -23,8 +23,16 @@
 		<org.jacoco.version>0.8.11</org.jacoco.version>
 		<com.github.ulisesbocchio.version>3.0.5</com.github.ulisesbocchio.version>
 		<org.springdoc.version>2.2.0</org.springdoc.version>
+		<org.springframework.security.version>6.2.2</org.springframework.security.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<version>${org.springframework.security.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>junit-jupiter</artifactId>
