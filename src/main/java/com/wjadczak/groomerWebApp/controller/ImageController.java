@@ -75,8 +75,12 @@ public class ImageController {
     @GetMapping
     public ResponseEntity<byte[]> downloadImage(){
         ImageDto image = imageService.downloadCurrentUserImage();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        headers.setContentDispositionFormData("attachment", image.getName());
+
         return  ResponseEntity.status(HttpStatus.OK)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename\"" + image.getName() + "\"")
+                .headers(headers)
                 .body(image.getImageData());
     }
 
