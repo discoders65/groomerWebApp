@@ -49,7 +49,7 @@ public class AdminController {
             }
     )
     @GetMapping("/image/{imageId}")
-    public ResponseEntity<byte[]> downloadImage(@PathVariable UUID imageId) {
+    public ResponseEntity<byte[]> downloadImage(@RequestParam UUID imageId) {
         ImageDto image = adminService.downloadImage(imageId);
         return  ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename\"" + image.getName() + "\"")
@@ -76,8 +76,8 @@ public class AdminController {
 
             }
     )
-    @PutMapping("/appointment/{appointmentId}")
-    public ResponseEntity<Void> confirmAppointment(@PathVariable UUID appointmentId) {
+    @PutMapping("/appointment")
+    public ResponseEntity<Void> confirmAppointment(@RequestParam UUID appointmentId) {
         adminService.confirmAppointment(appointmentId);
         return  ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -127,7 +127,7 @@ public class AdminController {
             }
     )
     @GetMapping("/user/{userId}")
-    public ResponseEntity<UserDto> getUser(@PathVariable  UUID userId) {
+    public ResponseEntity<UserDto> getUser(@RequestParam UUID userId) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(adminService.getUserById(userId));
     }
@@ -151,8 +151,8 @@ public class AdminController {
                     )
             }
     )
-    @DeleteMapping("/appointment/{appointmentId}")
-    public ResponseEntity<Void> cancelAppointment(@PathVariable UUID appointmentId) {
+    @DeleteMapping("/appointment")
+    public ResponseEntity<Void> cancelAppointment(@RequestParam UUID appointmentId) {
         adminService.cancelAppointment(appointmentId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

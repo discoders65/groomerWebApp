@@ -3,7 +3,6 @@ package com.wjadczak.groomerWebApp.config.security;
 
 import com.wjadczak.groomerWebApp.config.validation.PasswordValidatorProcessor;
 import com.wjadczak.groomerWebApp.dto.JwtAuthenticationResponseDto;
-import com.wjadczak.groomerWebApp.dto.NotificationDto;
 import com.wjadczak.groomerWebApp.dto.SignInDto;
 import com.wjadczak.groomerWebApp.dto.SignUpDto;
 import com.wjadczak.groomerWebApp.entity.Role;
@@ -12,15 +11,13 @@ import com.wjadczak.groomerWebApp.errors.ErrorMessages;
 import com.wjadczak.groomerWebApp.errors.InvalidUserDataInputException;
 import com.wjadczak.groomerWebApp.errors.UserAlreadyExistsException;
 import com.wjadczak.groomerWebApp.repository.UserRepository;
-import com.wjadczak.groomerWebApp.utils.MessageType;
+import com.wjadczak.groomerWebApp.service.NotificationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -35,7 +32,7 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordValidatorProcessor passwordValidatorProcessor;
-    private final RabbitTemplate rabbitTemplate;
+    private final NotificationService notificationService;
     @Override
     public void signUp(SignUpDto signUpDto) {
         validateSignUpRequest(signUpDto);
@@ -44,7 +41,7 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
                 .email(signUpDto.getEmail()).password(passwordEncoder.encode(signUpDto.getPassword()))
                 .role(Role.USER).mobile(signUpDto.getMobile()).build();
         userRepository.save(user);
-        sendRegistrationNotification(signUpDto.getEmail());
+        notificationService.sendRegistrationNotification(signUpDto.getEmail());
     }
 
     @Override
@@ -84,13 +81,4 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
         passwordValidatorProcessor.validate(signUpDto.getPassword());
     }
 
-    private void sendRegistrationNotification(String email) {
-        NotificationDto notificationDto = NotificationDto
-                .builder()
-                .eventDate(LocalDateTime.now())
-                .receiverMail(email)
-                .type(MessageType.REGISTRATION_CONFIRMATION)
-                .build();
-        rabbitTemplate.convertAndSend("x.message_exchange","k.registration",notificationDto);
-    }
 }

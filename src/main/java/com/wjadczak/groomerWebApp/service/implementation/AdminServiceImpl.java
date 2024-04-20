@@ -14,6 +14,7 @@ import com.wjadczak.groomerWebApp.repository.AppointmentRepository;
 import com.wjadczak.groomerWebApp.repository.ImageRepository;
 import com.wjadczak.groomerWebApp.repository.UserRepository;
 import com.wjadczak.groomerWebApp.service.AdminService;
+import com.wjadczak.groomerWebApp.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class AdminServiceImpl implements AdminService {
     private final ImageRepository imageRepository;
     private final AppointmentRepository appointmentRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
     @Override
     public void confirmAppointment(UUID id) {
         AppointmentEntity appointment = appointmentRepository
@@ -33,6 +35,9 @@ public class AdminServiceImpl implements AdminService {
                 .orElseThrow(()  -> new AppointmentNotFoundException(ErrorMessages.APPOINTMENT_NOT_FOUND));
         appointment.setAccepted(true);
         appointmentRepository.save(appointment);
+
+        String userEmail = appointment.getUserEntity().getEmail();
+        notificationService.sendAppointmentConfirmationNotification(userEmail, appointment.getDateStart());
     }
 
     @Override
@@ -66,5 +71,8 @@ public class AdminServiceImpl implements AdminService {
                 .orElseThrow(() -> new AppointmentNotFoundException(ErrorMessages.APPOINTMENT_NOT_FOUND));
         appointment.setCancelled(true);
         appointmentRepository.save(appointment);
+
+        String userEmail = appointment.getUserEntity().getEmail();
+        notificationService.sendAppointmentCancellationNotification(userEmail, appointment.getDateStart());
     }
 }

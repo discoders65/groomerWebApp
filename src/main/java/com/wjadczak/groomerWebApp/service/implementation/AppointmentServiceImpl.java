@@ -11,6 +11,7 @@ import com.wjadczak.groomerWebApp.errors.ErrorMessages;
 import com.wjadczak.groomerWebApp.mapper.AppointmentToAppointmentDtoMapper;
 import com.wjadczak.groomerWebApp.repository.AppointmentRepository;
 import com.wjadczak.groomerWebApp.service.AppointmentService;
+import com.wjadczak.groomerWebApp.service.NotificationService;
 import com.wjadczak.groomerWebApp.service.validators.AppointmentServiceValidator;
 import com.wjadczak.groomerWebApp.utils.TimeParserUtil;
 import lombok.RequiredArgsConstructor;
@@ -28,15 +29,20 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository appointmentRepository;
     private final AppointmentServiceValidator appointmentServiceValidator;
     private final AuthenticationHelper authenticationHelper;
+    private final NotificationService notificationService;
 
     @Override
     public void cancelCurrentUserAppointment(CancelAppointmentDto cancelAppointmentDto) {
         appointmentServiceValidator.validateCancelAppointmentDto(cancelAppointmentDto);
+
         AppointmentEntity appointmentEntity = appointmentRepository
                 .findById(cancelAppointmentDto.getAppointmentId())
                 .orElseThrow(() -> new AppointmentNotFoundException(ErrorMessages.INVALID_APPOINTMENT_ID));
         appointmentEntity.setCancelled(true);
         appointmentRepository.save(appointmentEntity);
+
+        String currentUserEmail = authenticationHelper.getCurrentUser().getEmail();
+        notificationService.sendAppointmentCancellationNotification( currentUserEmail, appointmentEntity.getDateStart());
     }
 
     @Override
