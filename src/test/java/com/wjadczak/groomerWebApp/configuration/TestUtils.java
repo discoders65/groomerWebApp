@@ -5,6 +5,7 @@ import com.wjadczak.groomerWebApp.entity.AppointmentEntity;
 import com.wjadczak.groomerWebApp.entity.Role;
 import com.wjadczak.groomerWebApp.entity.UserEntity;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
@@ -14,7 +15,15 @@ import java.util.List;
 import java.util.UUID;
 
 public class TestUtils {
-
+    @Value("${spring.rabbitmq.registrationRoutingKey}")
+    public static String REGISTRATION_ROUTING_KEY;
+    @Value("${spring.rabbitmq.confirmationRoutingKey}")
+    public static String CONFIRMATION_ROUTING_KEY;
+    @Value("${spring.rabbitmq.cancellationRoutingKey}")
+    public static String CANCELLATION_ROUTING_KEY;
+    @Value("${spring.rabbitmq.exchangeName}")
+    public static String EXCHANGE_NAME;
+    public static final LocalDateTime FIXED_DATE_TIME = LocalDateTime.of(2024, 4, 21, 10, 0, 0);
     public static final String VALID_APPOINTMENT_START_DATE = "2024-01-14 12:00:00";
     public static final String TEST_APPOINTMENT_START_DATE = "2024-02-14 12:00:00";
     public static final String VALID_APPOINTMENT_END_DATE = "2024-01-14 14:00:00";
