@@ -8,6 +8,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
@@ -21,11 +22,12 @@ public class NotificationServiceImpl implements NotificationService {
     private String CANCELLATION_ROUTING_KEY;
     @Value("${spring.rabbitmq.exchangeName}")
     private String EXCHANGE_NAME;
+    private final Clock clock;
     @Override
     public void sendRegistrationNotification(String email) {
         NotificationDto notificationDto = NotificationDto
                 .builder()
-                .eventDate(LocalDateTime.now())
+                .eventDate(LocalDateTime.now(clock))
                 .receiverMail(email)
                 .type(MessageType.REGISTRATION_CONFIRMATION)
                 .build();
