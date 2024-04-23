@@ -1,4 +1,4 @@
-package com.wjadczak.groomerWebApp.configuration;
+package com.wjadczak.groomerWebApp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

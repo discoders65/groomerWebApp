@@ -2,8 +2,8 @@ package com.wjadczak.groomerWebApp.integration;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.wjadczak.groomerWebApp.config.security.AuthenticationHelper;
-import com.wjadczak.groomerWebApp.configuration.IntegrationTestConfig;
-import com.wjadczak.groomerWebApp.configuration.TestUtils;
+import com.wjadczak.groomerWebApp.config.IntegrationTestConfig;
+import com.wjadczak.groomerWebApp.config.TestUtils;
 import com.wjadczak.groomerWebApp.dto.AppointmentDto;
 import com.wjadczak.groomerWebApp.dto.AppointmentSaveRequestDto;
 import com.wjadczak.groomerWebApp.dto.AppointmentSearchRequestDto;

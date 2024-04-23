@@ -1,7 +1,7 @@
 package com.wjadczak.groomerWebApp.integration;
 
-import com.wjadczak.groomerWebApp.configuration.TestUtils;
-import com.wjadczak.groomerWebApp.configuration.IntegrationTestConfig;
+import com.wjadczak.groomerWebApp.config.TestUtils;
+import com.wjadczak.groomerWebApp.config.IntegrationTestConfig;
 import com.wjadczak.groomerWebApp.dto.SignInDto;
 import com.wjadczak.groomerWebApp.dto.SignUpDto;
 import com.wjadczak.groomerWebApp.entity.UserEntity;

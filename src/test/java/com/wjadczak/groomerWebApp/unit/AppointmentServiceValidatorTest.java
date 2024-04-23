@@ -1,6 +1,6 @@
 package com.wjadczak.groomerWebApp.unit;
 
-import com.wjadczak.groomerWebApp.configuration.TestUtils;
+import com.wjadczak.groomerWebApp.config.TestUtils;
 import com.wjadczak.groomerWebApp.dto.AppointmentSaveRequestDto;
 import com.wjadczak.groomerWebApp.dto.AppointmentSearchRequestDto;
 import com.wjadczak.groomerWebApp.dto.CancelAppointmentDto;

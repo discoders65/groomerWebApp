@@ -1,4 +1,4 @@
-package com.wjadczak.groomerWebApp.configuration;
+package com.wjadczak.groomerWebApp.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

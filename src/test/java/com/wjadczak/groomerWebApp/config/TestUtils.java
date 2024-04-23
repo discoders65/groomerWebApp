@@ -1,4 +1,4 @@
-package com.wjadczak.groomerWebApp.configuration;
+package com.wjadczak.groomerWebApp.config;
 
 import com.wjadczak.groomerWebApp.dto.SignInDto;
 import com.wjadczak.groomerWebApp.entity.AppointmentEntity;

@@ -1,7 +1,7 @@
 package com.wjadczak.groomerWebApp.unit;
 
-import com.wjadczak.groomerWebApp.configuration.TestClock;
-import com.wjadczak.groomerWebApp.configuration.TestUtils;
+import com.wjadczak.groomerWebApp.config.TestClock;
+import com.wjadczak.groomerWebApp.config.TestUtils;
 import com.wjadczak.groomerWebApp.dto.NotificationDto;
 import com.wjadczak.groomerWebApp.service.implementation.NotificationServiceImpl;
 import com.wjadczak.groomerWebApp.utils.MessageType;
