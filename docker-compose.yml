@@ -8,6 +8,19 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/groomer_db
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: groomer
+      RABBITMQ_DEFAULT_PASS: groomer
+    volumes:
+      rabbitmq_data:
+        driver: local
+
   db:
     image: postgres:14
     environment:
