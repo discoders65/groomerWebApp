@@ -1,16 +1,67 @@
 services:
-  app:
-    build: ..
+  groomer_web_app:
+#    build:
+#      context: /home/wowo/Documents/groomerBookingApp/groomerWebApp/
+#      dockerfile: /home/wowo/Documents/groomerBookingApp/groomerWebApp/Dockerfile
+    image: wjadczak/groomer_booking_app:groomer_web_app-latest
     ports:
-      - "8085:8081"
+      - "8081:8081"
     depends_on:
-      - db
+      - groomer_db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/groomer_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://groomer_db:5432/groomer_db
+      SPRING_RABBITMQ_HOST: rabbit_mq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: groomer
+      SPRING_RABBITMQ_PASSWORD: groomer
 
-  rabbitmq:
+  groomer_msg:
+#    build:
+#      context: /home/wowo/Documents/groomerBookingApp/groomerMsg/
+#      dockerfile: /home/wowo/Documents/groomerBookingApp/groomerMsg/Dockerfile
+    image: wjadczak/groomer_booking_app:groomer_msg-latest
+    ports:
+      - "8082:8082"
+    depends_on:
+      - msg_db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://msg_db:5434/msg_db
+      SPRING_RABBITMQ_HOST: rabbit_mq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: groomer
+      SPRING_RABBITMQ_PASSWORD: groomer
+
+  groomer_db:
+    container_name: groomer_db
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_DB: groomer_db
+      POSTGRES_USER: groomer
+      POSTGRES_PASSWORD: XVX016_aerial
+    volumes:
+      - groomer_db_data:/var/lib/postgresql/groomer_db_data
+    ports:
+      - "5433:5432"
+    command: [ "postgres", "-c", "listen_addresses=*", "-p", "5432" ]
+
+  msg_db:
+    container_name: msg_db
+    image: postgres:14
+    restart: always
+    ports:
+      - "5435:5434"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: msg_db
+    volumes:
+      - msg_db_data:/var/lib/postgresql/msg_db_data
+    command: [ "postgres", "-c", "listen_addresses=*", "-p", "5434" ]
+
+  rabbit_mq:
     image: rabbitmq:3-management
-    container_name: rabbitmq
+    container_name: rabbit_mq
     ports:
       - 5672:5672
       - 15672:15672
@@ -18,16 +69,13 @@ services:
       RABBITMQ_DEFAULT_USER: groomer
       RABBITMQ_DEFAULT_PASS: groomer
     volumes:
-      rabbitmq_data:
-        driver: local
+      - rabbit_mq_data:/var/lib/rabbit_mq
+    restart: unless-stopped
 
-  db:
-    image: postgres:14
-    environment:
-      POSTGRES_DB: groomer_db
-      POSTGRES_USER: groomer
-      POSTGRES_PASSWORD: XVX016_aerial
-    volumes:
-      - /home/wowo/Documents/dbContainer:/var/lib/postgresql/data
-    ports:
-      - "5433:5432"
+volumes:
+  msg_db_data:
+    driver: local
+  rabbit_mq_data:
+    driver: local
+  groomer_db_data:
+    driver: local
