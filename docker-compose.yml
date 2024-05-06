@@ -1,8 +1,6 @@
 services:
   groomer_web_app:
-#    build:
-#      context: /home/wowo/Documents/groomerBookingApp/groomerWebApp/
-#      dockerfile: /home/wowo/Documents/groomerBookingApp/groomerWebApp/Dockerfile
+
     image: wjadczak/groomer_booking_app:groomer_web_app-latest
     ports:
       - "8081:8081"
@@ -16,9 +14,7 @@ services:
       SPRING_RABBITMQ_PASSWORD: groomer
 
   groomer_msg:
-#    build:
-#      context: /home/wowo/Documents/groomerBookingApp/groomerMsg/
-#      dockerfile: /home/wowo/Documents/groomerBookingApp/groomerMsg/Dockerfile
+
     image: wjadczak/groomer_booking_app:groomer_msg-latest
     ports:
       - "8082:8082"
