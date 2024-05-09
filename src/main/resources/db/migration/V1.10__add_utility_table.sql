@@ -7,20 +7,20 @@ ALTER TABLE IF EXISTS groomer."appointment"
 ALTER TABLE IF EXISTS groomer."appointment"
     ADD PRIMARY KEY (id);
 
-CREATE TABLE groomer."service" (
+CREATE TABLE groomer."utility" (
     id UUID PRIMARY KEY,
-    type VARCHAR(255),
+    name VARCHAR(255),
     description VARCHAR(255),
     low_price NUMERIC(10,2),
     up_price NUMERIC(10,2),
     execution_time TIME
 );
 
-CREATE TABLE groomer."appointment_service" (
+CREATE TABLE groomer."appointment_utility" (
     appointment_id UUID NOT NULL,
-    service_id UUID NOT NULL,
+    utility_id UUID NOT NULL,
     PRIMARY KEY (appointment_id, service_id),
     FOREIGN KEY (appointment_id) REFERENCES groomer."appointment" (id) ON DELETE CASCADE,
-    FOREIGN KEY (service_id) REFERENCES groomer."service" (id) ON DELETE CASCADE
+    FOREIGN KEY (utility_id) REFERENCES groomer."utility" (id) ON DELETE CASCADE
 );
 

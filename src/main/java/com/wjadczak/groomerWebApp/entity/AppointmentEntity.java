@@ -38,8 +38,8 @@ public class AppointmentEntity {
     private boolean cancelled;
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @JoinTable(name = "appointment_service", joinColumns = @JoinColumn(name = "appointment_id"),
-            inverseJoinColumns = @JoinColumn(name = "service_id"))
-    private HashSet<ServiceEntity> services;
+            inverseJoinColumns = @JoinColumn(name = "utility_id"))
+    private HashSet<UtilityEntity> services;
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private UserEntity employee;

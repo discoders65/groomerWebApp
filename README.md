@@ -77,6 +77,13 @@ cd groomerWebApp
 <pre><code>mvn spring-boot:run
 </code></pre>
 
+<ol start="4">
+    <li>Or run project in docker container:</li>
+</ol>
+
+<pre><code>docker compose up
+</code></pre>
+
 <h2 id="usage">Usage</h2>
 
 <p>Once the application is running, you can access it at <code>http://localhost:8081</code>. Use the provided endpoints to manage appointments and bookings.</p>
