@@ -1,6 +1,7 @@
 package com.wjadczak.groomerWebApp.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
@@ -8,7 +9,13 @@ import java.util.HashSet;
 import java.util.UUID;
 @Entity
 @Table(name = "utility")
+@Getter
 public class UtilityEntity {
+
+    public UtilityEntity(UUID id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

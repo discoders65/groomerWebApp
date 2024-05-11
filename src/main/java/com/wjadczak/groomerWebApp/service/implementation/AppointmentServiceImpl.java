@@ -73,11 +73,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private List<AppointmentDto> findAppointmentDateBetween(LocalDateTime dateStart, LocalDateTime dateEnd) {
         log.debug("Finding appointments between {} and {}", dateStart, dateEnd);
-        List<AppointmentDto> appointmentsFound = AppointmentToAppointmentDtoMapper
+        List<AppointmentDto> appointments = AppointmentToAppointmentDtoMapper
                 .appointmentToAppointmentDtoMapper
                 .mapAppointmentsToDtos(appointmentRepository.findByDateStartBetween(dateStart, dateEnd));
-        log.debug("Found {} appointments between {} and {}", appointmentsFound.size(), dateStart, dateEnd);
-        return appointmentsFound;
+        log.debug("Found {} appointments between {} and {}", appointments.size(), dateStart, dateEnd);
+        return appointments;
     }
 
 }

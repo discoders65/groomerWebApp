@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,15 +40,20 @@ public class TestUtils {
         TEST_USER = createUserEntity();
     }
     public static final List<AppointmentEntity> TEST_APPOINTMENTS = Arrays.asList(
-            new AppointmentEntity(
-                    UUID.randomUUID(),
-                    VALID_START_DATE_TIME,
-                    VALID_END_DATE_TIME,
-                    "comment",
-                    Mockito.mock(UserEntity.class),
-                    new BigDecimal("100"),
-                    false,
-                    false));
+            AppointmentEntity.builder()
+                    .id(UUID.randomUUID())
+                    .dateStart(VALID_START_DATE_TIME)
+                    .dateEnd(VALID_END_DATE_TIME)
+                    .comment("comment")
+                    .userEntity(Mockito.mock(UserEntity.class))
+                    .pricing(new BigDecimal("100"))
+                    .accepted(false)
+                    .cancelled(false)
+                    .utilities(new HashSet<>()) // Add utilities if needed
+                    .employee(Mockito.mock(UserEntity.class))
+                    .build()
+    );
+
     public static final AppointmentEntity TEST_APPOINTMENT = AppointmentEntity
             .builder()
             .id(UUID.randomUUID())

@@ -19,7 +19,7 @@ CREATE TABLE groomer."utility" (
 CREATE TABLE groomer."appointment_utility" (
     appointment_id UUID NOT NULL,
     utility_id UUID NOT NULL,
-    PRIMARY KEY (appointment_id, service_id),
+    PRIMARY KEY (appointment_id, utility_id),
     FOREIGN KEY (appointment_id) REFERENCES groomer."appointment" (id) ON DELETE CASCADE,
     FOREIGN KEY (utility_id) REFERENCES groomer."utility" (id) ON DELETE CASCADE
 );
