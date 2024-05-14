@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS groomer."image"
     image_data BYTEA,
     PRIMARY KEY (id)
 );
-
+ALTER TABLE IF EXISTS groomer."image" DROP CONSTRAINT IF EXISTS fk_user_id;
 ALTER TABLE IF EXISTS groomer."image"
     ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id)
     REFERENCES groomer."groomer_user" (id) MATCH SIMPLE
