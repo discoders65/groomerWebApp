@@ -31,7 +31,7 @@ public class AppointmentEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
     @Column(columnDefinition = "NUMERIC(10,2)")
-    private BigDecimal pricing; //BigDecimal
+    private BigDecimal pricing;
     @Column
     private boolean accepted;
     @Column
